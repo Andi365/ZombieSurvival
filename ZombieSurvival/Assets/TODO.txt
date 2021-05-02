@@ -1,0 +1,20 @@
+enemies:
+	AI
+		hp
+		forskellige typer
+		skade
+		navigering
+	Spawner logic
+
+player:
+	Controller
+	(inventory system)
+
+General:
+	Multiplayer connection
+	Game logic
+	(Save system)
+	
+Scenes:
+	Game map
+	Test map
