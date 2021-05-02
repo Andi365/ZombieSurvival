@@ -45,10 +45,10 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 679, y: 492}
-  m_MaxSize: {x: 14002, y: 14042}
+  m_MinSize: {x: 677, y: 492}
+  m_MaxSize: {x: 14001, y: 14042}
   vertical: 0
-  controlID: 167
+  controlID: 105
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -68,8 +68,8 @@ MonoBehaviour:
     y: 0
     width: 389
     height: 947
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
@@ -95,8 +95,8 @@ MonoBehaviour:
     y: 0
     width: 379
     height: 676
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
@@ -217,10 +217,10 @@ MonoBehaviour:
     y: 0
     width: 1531
     height: 947
-  m_MinSize: {x: 403, y: 492}
+  m_MinSize: {x: 402, y: 492}
   m_MaxSize: {x: 10001, y: 14042}
   vertical: 1
-  controlID: 62
+  controlID: 106
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -242,10 +242,10 @@ MonoBehaviour:
     y: 0
     width: 1531
     height: 676
-  m_MinSize: {x: 403, y: 221}
-  m_MaxSize: {x: 8003, y: 4021}
+  m_MinSize: {x: 402, y: 221}
+  m_MaxSize: {x: 8002, y: 4021}
   vertical: 0
-  controlID: 63
+  controlID: 107
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -378,14 +378,14 @@ MonoBehaviour:
   m_LastFolders:
   - Assets/Scripts
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: C:\Users\Ander\Desktop\zombiesurvival\ZombieSurvival
+  m_LastProjectPath: C:\Users\mj\Desktop\DTU\6. semester\C sharp\ZombieSurvival\ZombieSurvival
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 14}
-    m_SelectedIDs: d8340000
-    m_LastClickedID: 13528
-    m_ExpandedIDs: 00000000cc34000000ca9a3b
+    scrollPos: {x: 0, y: 30}
+    m_SelectedIDs: c0340000
+    m_LastClickedID: 13504
+    m_ExpandedIDs: 00000000b8340000be34000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -413,7 +413,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000cc340000
+    m_ExpandedIDs: 00000000b8340000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -440,7 +440,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c623000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -536,9 +536,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: f8f0ffff82f3ffffa0f4ffff00f5ffffc2f8ffff58fbffff00000000
+      m_SelectedIDs: f0340000
+      m_LastClickedID: 13552
+      m_ExpandedIDs: aef9ffff68fbffffe8340000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -598,9 +598,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 576.8337, y: 360.8182, z: 31.81765}
+    m_Target: {x: 0.020999998, y: 1.01, z: 0}
     speed: 2
-    m_Value: {x: 576.8337, y: 360.8182, z: 31.81765}
+    m_Value: {x: 0.020999998, y: 1.01, z: 0}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -646,13 +646,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.07941886, y: 0.01078234, z: -0.00053419324, w: 0.99683845}
+    m_Target: {x: 0.30037534, y: -0.38850585, z: 0.13600478, w: 0.8604949}
     speed: 2
-    m_Value: {x: 0.07941446, y: 0.010781742, z: -0.0005341636, w: 0.9967832}
+    m_Value: {x: 0.30035868, y: -0.3884843, z: 0.13599724, w: 0.8604472}
   m_Size:
-    m_Target: 392.95712
+    m_Target: 1.2334671
     speed: 2
-    m_Value: 392.95712
+    m_Value: 1.533467
   m_Ortho:
     m_Target: 0
     speed: 2
