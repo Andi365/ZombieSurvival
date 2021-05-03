@@ -31,7 +31,7 @@ namespace GameServer.Data
         public byte[] toBytes()
         {
             byte[] bytes = new byte[13];
-            bytes[0] = Signature();
+            bytes[0] = Signature;
             BitConverter.GetBytes(x).CopyTo(bytes, 1);
             BitConverter.GetBytes(y).CopyTo(bytes, 5);
             BitConverter.GetBytes(z).CopyTo(bytes, 9);

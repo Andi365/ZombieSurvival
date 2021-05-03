@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Net;
 using System.Net.Sockets;
+using GameServer.Data;
+
+using System.Threading;
 
 namespace GameServer
 {
@@ -13,6 +16,7 @@ namespace GameServer
         public static Dictionary<int, Client> clients = new Dictionary<int, Client>();
 
         private static TcpListener tcpListener;
+        private static Thread listenerThread;
 
         public static void Start (int _maxPlayers, int _port)
         {
@@ -26,6 +30,12 @@ namespace GameServer
             tcpListener.BeginAcceptTcpClient(new AsyncCallback(TCPConnectCallback), null);
 
             Console.WriteLine($"Server booted on {Port}");
+
+        }
+
+        private void IncomingRequest()
+        {
+
         }
 
         private static void TCPConnectCallback(IAsyncResult _result)
