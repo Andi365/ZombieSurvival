@@ -6,8 +6,8 @@ namespace GameServer.Data
 {
     interface IData
     {
-        public byte[] toBytes();
-        public byte Signature();
-        public int SizeOf();
+        byte[] toBytes();
+        byte Signature();
+        int SizeOf();
     }
 }
