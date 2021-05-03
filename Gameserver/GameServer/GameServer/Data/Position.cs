@@ -12,6 +12,13 @@ namespace GameServer.Data
 
         private float x, y, z;
 
+        public Position(float x, float y, float z)
+        {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+        }
+
         public Position(byte[] bytes)
         {
             x = BitConverter.ToSingle(bytes, 1);
