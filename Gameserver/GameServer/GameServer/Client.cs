@@ -45,6 +45,23 @@ namespace GameServer
 
                 stream.BeginRead(receiveBuffer, 0, dataBufferSize, ReceiveCallback, null);
             }
+
+            public void SendData(IData _data)
+            {
+                try
+                {
+                    if(socket != null)
+                    {
+                        byte[] _packet = _data.toBytes();
+                        stream.BeginWrite(_packet, 0, _packet.Length(), 0, 0);
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine($"Trying to send {_data} and something went wrong");
+                }
+            }
+
             private void ReceiveCallback(IAsyncResult _result)
             {
                 try
