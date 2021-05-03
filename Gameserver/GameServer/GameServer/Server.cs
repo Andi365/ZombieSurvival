@@ -52,5 +52,18 @@ namespace GameServer
             }
 
         }
+
+        private static void SendData(int _clientId, IData _data)
+        {
+            clients[_clientId].tcp.SendData(_data);
+        }
+
+        private static void BroadcastData(IData _data)
+        {
+            for(int i = 0; i<MaxPlayers; i++)
+            {
+                clients[i].tcp.SendData(_data);
+            }
+        }
     }
 }
