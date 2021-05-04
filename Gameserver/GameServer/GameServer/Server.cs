@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using System.Net;
 using System.Net.Sockets;
+using GameServer.Data;
+
+using System.Threading;
 
 namespace GameServer
 {
-    class Server
+    static class Server
     {
         public static int MaxPlayers { get; private set; }
         public static int Port { get; private set; }
@@ -26,6 +29,7 @@ namespace GameServer
             tcpListener.BeginAcceptTcpClient(new AsyncCallback(TCPConnectCallback), null);
 
             Console.WriteLine($"Server booted on {Port}");
+
         }
 
         private static void TCPConnectCallback(IAsyncResult _result)
@@ -51,6 +55,19 @@ namespace GameServer
                 clients.Add(i, new Client(i));
             }
 
+        }
+
+        private static void SendData(int _clientId, IData _data)
+        {
+            clients[_clientId].tcp.SendData(_data);
+        }
+
+        public static void BroadcastData(IData _data)
+        {
+            for(int i = 0; i<MaxPlayers; i++)
+            {
+                clients[i].tcp.SendData(_data);
+            }
         }
     }
 }
