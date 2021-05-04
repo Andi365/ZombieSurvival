@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Net;
 using System.Net.Sockets;
-
+using GameServer.Data;
 
 namespace GameServer
 {
@@ -53,7 +53,7 @@ namespace GameServer
                     if(socket != null)
                     {
                         byte[] _packet = _data.toBytes();
-                        stream.BeginWrite(_packet, 0, _packet.Length(), 0, 0);
+                        stream.BeginWrite(_packet, 0, _data.SizeOf(), null, 0);
                     }
                 }
                 catch
@@ -72,7 +72,8 @@ namespace GameServer
                     Array.Copy(receiveBuffer, _data, _byteLength);
 
                     stream.BeginRead(receiveBuffer, 0, dataBufferSize, ReceiveCallback, null);
-                } catch (Exception e)
+                    Console.WriteLine(receiveBuffer);
+                } catch (Exception)
                 {
                     Console.WriteLine("Error");
                 }
