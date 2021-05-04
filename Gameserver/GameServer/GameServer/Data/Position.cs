@@ -38,5 +38,9 @@ namespace GameServer.Data
             return bytes;
         }
 
+        override public string ToString()
+        {
+            return String.Format("X: {0}, Y: {1}, Z: {2}", x, y, z);
+        }
     }
 }

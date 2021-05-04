@@ -44,7 +44,7 @@ public class Client : MonoBehaviour
 
     private void SendMessage()
     {
-        tcp.Send();
+        tcp.Send(new Position(1, 2, 3).toBytes(), 13);
     }
 
     public void ConnectToServer()
@@ -85,21 +85,7 @@ public class Client : MonoBehaviour
             socket.BeginConnect(instance.ip, instance.port, (n) => Debug.Log("Connected"), socket);
         }
 
-        private void ConnectCallback(IAsyncResult _result)
-        {
-            socket.EndConnect(_result);
-
-            if (!socket.Connected)
-            {
-                return;
-            }
-
-            stream = socket.GetStream();
-
-            //stream.BeginRead(receiveBuffer, 0, dataBufferSize, ReceiveCallback, null);
-        }
-
-        public void Send()
+        public void Send(byte[] data, int size)
         {
             if (socket == null)
             {
@@ -108,14 +94,17 @@ public class Client : MonoBehaviour
             try
             {
                 stream = socket.GetStream();
-                Position pos = new Position(1, 2, 3);
-                stream.Write(pos.toBytes(), 0, pos.SizeOf());
+                stream.Write(data, 0, size);
             }
             catch (Exception)
             {
                 Console.WriteLine("Dø i et hul");
             }
         }
+    }
+    private void OnApplicationQuit() {
+        tcp.Send(new byte[]{ 0xFF }, 1);
+        tcp.socket.Close();
     }
 }
 

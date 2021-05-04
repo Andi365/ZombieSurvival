@@ -9,14 +9,13 @@ using System.Threading;
 
 namespace GameServer
 {
-    class Server
+    static class Server
     {
         public static int MaxPlayers { get; private set; }
         public static int Port { get; private set; }
         public static Dictionary<int, Client> clients = new Dictionary<int, Client>();
 
         private static TcpListener tcpListener;
-        private static Thread listenerThread;
 
         public static void Start (int _maxPlayers, int _port)
         {
@@ -30,11 +29,6 @@ namespace GameServer
             tcpListener.BeginAcceptTcpClient(new AsyncCallback(TCPConnectCallback), null);
 
             Console.WriteLine($"Server booted on {Port}");
-
-        }
-
-        private void IncomingRequest()
-        {
 
         }
 
@@ -68,7 +62,7 @@ namespace GameServer
             clients[_clientId].tcp.SendData(_data);
         }
 
-        private static void BroadcastData(IData _data)
+        public static void BroadcastData(IData _data)
         {
             for(int i = 0; i<MaxPlayers; i++)
             {
