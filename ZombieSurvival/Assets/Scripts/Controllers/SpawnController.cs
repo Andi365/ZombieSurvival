@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using GameServer.Data;
 
-public class SpawnController : MonoBehaviour
+class SpawnController : MonoBehaviour
 {
     public static SpawnController instance;
     public static GameObject[] spawnPoints;
-    public GameObject enemy;
+    public GameObject zombieObject;
+    public Dictionary<int, GameObject> zombies = new Dictionary<int, GameObject>();
     private void Awake()
     {
         if (instance == null)
@@ -21,14 +22,25 @@ public class SpawnController : MonoBehaviour
         }
     }
 
-    private void Start() {
+    private void Start()
+    {
         GameController gc = GameObject.FindGameObjectsWithTag("GameController")[0].GetComponent<GameController>();
         gc.sc = this;
     }
 
-    IEnumerator Spawn(Zombie zombie)
+    public void spawnEnemy(Zombie zombie)
     {
-        yield return Instantiate(enemy, spawnPoints[zombie.spawnPoint].transform.position, Quaternion.identity);
+        zombies.Add(zombie.id, Instantiate(zombieObject, spawnPoints[zombie.spawnPoint].transform.position, Quaternion.identity));
     }
 
+    public void killEnemy(Zombie zombie)
+    {
+        if (zombies.ContainsKey(zombie.id))
+        {
+            GameObject z;
+            zombies.TryGetValue(zombie.id, out z);
+            Destroy(z);
+        }
+
+    }
 }

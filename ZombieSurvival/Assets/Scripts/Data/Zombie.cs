@@ -8,7 +8,7 @@ namespace GameServer.Data
     {
         static public byte Signature => 0b00000100;
         byte IData.Signature() => Signature;
-        private byte id;
+        public byte id;
         // Between 0..n-1 spawnpoints
         public byte spawnPoint;
 
