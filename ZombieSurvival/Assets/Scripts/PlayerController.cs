@@ -9,11 +9,14 @@ public class PlayerController : MonoBehaviour
     public float onGroundDist = 1.01f;
     public float sensitivity = 1f;
     private new Rigidbody rigidbody;
+    private PlayerState ps;
     public Camera camera = null;
+    bool esc;
     // Start is called before the first frame update
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
+        ps = new PlayerState();
     }
 
     // Update is called once per frame
@@ -60,5 +63,38 @@ public class PlayerController : MonoBehaviour
         else
             d = Mathf.Clamp(d, -1f, 90f);
         camera.transform.eulerAngles = new Vector3(d, udDir.y, udDir.z);
+
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            esc = !esc;
+
+            if (esc)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
+        }
+    }
+
+    private void Update()
+    {
+        
+
+        
+    }
+
+    public void updateHP(int damageTaken)
+    {
+        ps.Hp = ps.Hp - damageTaken;
+
+        if (ps.Hp <= 0)
+        {
+            //DIE
+        }
     }
 }
