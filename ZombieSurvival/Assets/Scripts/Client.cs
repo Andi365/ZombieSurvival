@@ -27,6 +27,7 @@ public class Client : MonoBehaviour
             Debug.Log("only one instance should exist");
             Destroy(this);
         }
+        DontDestroyOnLoad(this.gameObject);
     }
 
     private void Start()
