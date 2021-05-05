@@ -9,7 +9,9 @@ namespace GameServer.Data
     {
         private static Dictionary<byte, Func<byte[], IData>> SignatureToImplementation = new Dictionary<byte, Func<byte[], IData>>()
         {
-            { Position.Signature, n => new Position(n) }
+            { Position.Signature, n => new Position(n) },
+            { Zombie.Signature, n => new Zombie(n) },
+            { ZombieDead.Signature, n => new ZombieDead(n) }
         };
 
         public static IData BytesToData(byte[] bytes)

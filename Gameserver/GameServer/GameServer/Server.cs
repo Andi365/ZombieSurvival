@@ -57,6 +57,17 @@ namespace GameServer
 
         }
 
+        private static void InitializeZombieSpawn()
+        {
+            Random random = new Random();
+            for (int i = 0; i < 10; i++)
+            {
+                Zombie zom = new Zombie(Convert.ToByte(i), 1);
+
+                BroadcastData(zom);
+            }
+        }
+
         private static void SendData(int _clientId, IData _data)
         {
             clients[_clientId].tcp.SendData(_data);
