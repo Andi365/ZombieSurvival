@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     public float sensitivity = 1f;
     private new Rigidbody rigidbody;
     private PlayerState ps;
-    public Camera camera = null;
+    public new Camera camera;
     bool esc;
     // Start is called before the first frame update
     void Start()

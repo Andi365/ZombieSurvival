@@ -5,9 +5,9 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
 
-public class UIManager : MonoBehaviour
+public class UIController : MonoBehaviour
 {
-    public static UIManager instance;
+    public static UIController instance;
     public GameObject startMenu;
     public InputField usernameField;
 

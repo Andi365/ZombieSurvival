@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Concurrent;
 using UnityEngine;
-using custom;
 using GameServer.Data;
 
 public class GameController : MonoBehaviour
