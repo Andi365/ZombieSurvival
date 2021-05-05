@@ -33,7 +33,8 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
             r++;
 
-        if (Input.GetKey(KeyCode.Space)) {
+        if (Input.GetKey(KeyCode.Space))
+        {
             if (Physics.Raycast(transform.position, Vector3.down, onGroundDist))
                 rigidbody.velocity = new Vector3(0, jumpVel, 0);
         }
@@ -42,7 +43,7 @@ public class PlayerController : MonoBehaviour
         v = Quaternion.AngleAxis(camera.transform.rotation.eulerAngles.y, Vector3.up) * v;
         rigidbody.position = Vector3.MoveTowards(rigidbody.position, v.normalized + rigidbody.position, Time.fixedDeltaTime * speed);
 
-        f = 0; 
+        f = 0;
         r = 0;
         if (Input.GetKey(KeyCode.UpArrow))
             f++;
@@ -57,7 +58,7 @@ public class PlayerController : MonoBehaviour
         f += sensitivity * Input.GetAxis("Mouse Y");
 
         transform.eulerAngles = transform.eulerAngles + new Vector3(0f, 90f * r * Time.fixedDeltaTime, 0f);
-        Vector3 udDir = camera.transform.eulerAngles + new Vector3(-90f * f * Time.fixedDeltaTime, 0f ,0f);
+        Vector3 udDir = camera.transform.eulerAngles + new Vector3(-90f * f * Time.fixedDeltaTime, 0f, 0f);
         float d = udDir.x;
         if (d > 180)
             d = Mathf.Clamp(d, 270f, 360f);
@@ -80,13 +81,20 @@ public class PlayerController : MonoBehaviour
                 Cursor.visible = false;
             }
         }
+
+        if (Input.GetKey(KeyCode.H))
+        {
+            Zombie zom = new Zombie(0, 1);
+            SpawnController spawn = new SpawnController();
+            spawn.spawnEnemy(zom);
+        }
     }
 
     private void Update()
     {
-        
 
-        
+
+
     }
 
     public void updateHP(int damageTaken)
