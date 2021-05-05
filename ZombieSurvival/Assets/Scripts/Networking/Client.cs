@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using System.Net;
 using System.Net.Sockets;
-using GameServer.Data;
+using Data;
 using System.Threading;
 
 public class Client : MonoBehaviour
@@ -80,7 +80,6 @@ public class Client : MonoBehaviour
             stream.BeginRead(receiveBuffer, 0, dataBufferSize, new AsyncCallback(DataCallback), stream);
         }
 
-        int i = 0;
         private void DataCallback(IAsyncResult _result) 
         {
             NetworkStream stream = (NetworkStream)_result.AsyncState;
