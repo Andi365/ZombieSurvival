@@ -21,6 +21,11 @@ public class SpawnController : MonoBehaviour
         }
     }
 
+    private void Start() {
+        GameController gc = GameObject.FindGameObjectsWithTag("GameController")[0].GetComponent<GameController>();
+        gc.sc = this;
+    }
+
     IEnumerator Spawn(Zombie zombie)
     {
         yield return Instantiate(enemy, spawnPoints[zombie.spawnPoint].transform.position, Quaternion.identity);
