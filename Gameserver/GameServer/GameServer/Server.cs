@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Net;
 using System.Net.Sockets;
-using GameServer.Data;
+using Data;
 
 using System.Threading;
 
