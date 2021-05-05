@@ -50,7 +50,7 @@ namespace GameServer
 
         private static void InitializeServerData()
         {
-            for(int i = 1; i<=MaxPlayers; i++)
+            for(int i = 0; i < MaxPlayers; i++)
             {
                 clients.Add(i, new Client(i));
             }
@@ -64,7 +64,7 @@ namespace GameServer
 
         public static void BroadcastData(IData _data)
         {
-            for(int i = 0; i<MaxPlayers; i++)
+            for(int i = 0; i < MaxPlayers; i++)
             {
                 clients[i].tcp.SendData(_data);
             }
