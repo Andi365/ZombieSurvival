@@ -37,8 +37,9 @@ namespace GameClient.Controllers
 
             if (Input.GetKey(KeyCode.Space))
             {
-                if (Physics.Raycast(transform.position, Vector3.down, onGroundDist))
+                if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), onGroundDist)) {
                     rigidbody.velocity = new Vector3(0, jumpVel, 0);
+                }
             }
 
             Vector3 v = new Vector3(r, 0, f);
@@ -68,7 +69,7 @@ namespace GameClient.Controllers
                 d = Mathf.Clamp(d, -1f, 90f);
             camera.transform.eulerAngles = new Vector3(d, udDir.y, udDir.z);
 
-            if (Input.GetKey(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
                 esc = !esc;
 

@@ -26,8 +26,14 @@ namespace GameClient.Controllers
 
         private void Start()
         {
-            GameController gc = GameObject.FindGameObjectsWithTag("GameController")[0].GetComponent<GameController>();
-            gc.sc = this;
+            try
+            {
+                GameController gc = GameObject.FindGameObjectsWithTag("GameController")[0].GetComponent<GameController>();
+                gc.sc = this;
+            }
+            catch (System.Exception)
+            {
+            }
         }
 
         public void spawnEnemy(Zombie zombie)
