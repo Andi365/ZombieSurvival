@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-namespace GameServer.Data
+namespace Data
 {
     public class PlayerState : IData
     {

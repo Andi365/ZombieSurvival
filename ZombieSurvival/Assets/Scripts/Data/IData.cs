@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GameServer.Data
+namespace Data
 {
     interface IData
     {

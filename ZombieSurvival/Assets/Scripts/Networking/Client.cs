@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using System.Net;
 using System.Net.Sockets;
-using GameServer.Data;
+using Data;
 using System.Threading;
 
 public class Client : MonoBehaviour
