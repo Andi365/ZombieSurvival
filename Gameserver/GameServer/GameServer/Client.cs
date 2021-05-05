@@ -37,25 +37,8 @@ namespace GameServer
 
                 receiveBuffer = new byte[dataBufferSize];
 
-                stream.BeginRead(receiveBuffer, 0, dataBufferSize, ReceiveCallback, null);
+                stream.BeginRead(receiveBuffer, 0, dataBufferSize, new AsyncCallback(ReceiveCallback), null);
             }
-
-            public void SendData(IData _data)
-            {
-                try
-                {
-                    if(socket != null)
-                    {
-                        byte[] _packet = _data.toBytes();
-                        stream.BeginWrite(_packet, 0, _data.SizeOf(), null, 0);
-                    }
-                }
-                catch
-                {
-                    Console.WriteLine($"Trying to send {_data} and something went wrong");
-                }
-            }
-
             private void ReceiveCallback(IAsyncResult _result)
             {
                 try
@@ -68,15 +51,40 @@ namespace GameServer
                         case 0xFF:
                             socket.Close();
                             return;
+                        case 0x01:
+                            Server.BroadcastData(DataFactory.BytesToData(receiveBuffer));
+                            break;
                         default:
                             break;
                     }
                     Console.WriteLine(DataFactory.BytesToData(receiveBuffer));
-                    stream.BeginRead(receiveBuffer, 0, dataBufferSize, ReceiveCallback, null);
-                } catch (Exception)
+                    stream.BeginRead(receiveBuffer, 0, dataBufferSize, new AsyncCallback(ReceiveCallback), null);
+                } catch (Exception e)
                 {
-                    Console.WriteLine("Error");
+                    Console.WriteLine(e.Message);
                 }
+            }
+
+            public void SendData(IData _data)
+            {
+                try
+                {
+                    if (socket == null)
+                        return;
+                    if(socket.Connected)
+                    {
+                        byte[] _packet = _data.toBytes();
+                        stream.Write(_packet, 0, _data.SizeOf());
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine($"Trying to send {_data} and something went wrong");
+                }
+            }
+
+            public static void WriteCallback(IAsyncResult streamResult)
+            {
             }
         }
     }

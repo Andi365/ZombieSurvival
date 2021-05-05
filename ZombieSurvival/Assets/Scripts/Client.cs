@@ -57,24 +57,7 @@ public class Client : MonoBehaviour
         public TcpClient socket;
         private NetworkStream stream;
         private byte[] receiveBuffer;
-        private Thread clientThread;
         public void Connect()
-        {
-            try
-            {
-                clientThread = new Thread(new ThreadStart(ListenForData));
-                clientThread.IsBackground = true;
-                clientThread.Start();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-
-
-        }
-
-        private void ListenForData()
         {
             socket = new TcpClient
             {
@@ -82,7 +65,40 @@ public class Client : MonoBehaviour
                 SendBufferSize = dataBufferSize
             };
             receiveBuffer = new byte[dataBufferSize];
-            socket.BeginConnect(instance.ip, instance.port, (n) => Debug.Log("Connected"), socket);
+            socket.BeginConnect(instance.ip, instance.port, new AsyncCallback(ConnectedCallback), socket);
+        }
+
+        private void ConnectedCallback(IAsyncResult _result) 
+        {
+            TcpClient socket = (TcpClient)_result.AsyncState;
+            socket.EndConnect(_result);
+            if (!socket.Connected)
+                return;
+            stream = socket.GetStream();
+            Debug.Log("Connected");
+            stream.BeginRead(receiveBuffer, 0, dataBufferSize, new AsyncCallback(DataCallback), stream);
+        }
+
+        int i = 0;
+        private void DataCallback(IAsyncResult _result) 
+        {
+            NetworkStream stream = (NetworkStream)_result.AsyncState;
+            int _byteLength = stream.EndRead(_result);
+            switch (receiveBuffer[0])
+            {
+                case 0xFF:
+                    socket.Close();
+                    return;
+                case 0x01:
+                    Debug.Log(DataFactory.BytesToData(receiveBuffer));
+                    break;
+                case 0x04:
+                    //do zombie shit
+                    break;
+                default:
+                    break;
+            }
+            stream.BeginRead(receiveBuffer, 0, dataBufferSize, new AsyncCallback(DataCallback), stream);
         }
 
         public void Send(byte[] data, int size)
