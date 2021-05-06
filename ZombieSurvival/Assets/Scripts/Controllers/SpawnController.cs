@@ -30,16 +30,25 @@ namespace GameClient.Controllers
             {
                 GameController gc = GameObject.FindGameObjectsWithTag("GameController")[0].GetComponent<GameController>();
                 gc.sc = this;
+
             }
             catch (System.Exception)
             {
             }
+
+            spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
         }
 
         public void spawnEnemy(Zombie zombie)
         {
-            zombies.Add(zombie.id, Instantiate(zombieObject, spawnPoints[zombie.spawnPoint].transform.position, Quaternion.identity));
+            Debug.Log("Here");
+            Instantiate(zombieObject, spawnPoints[zombie.spawnPoint].transform.position, Quaternion.identity);
+
+            //zombies.Add(zombie.id, Instantiate(zombieObject, spawnPoints[zombie.spawnPoint].transform.position, Quaternion.identity));
+
+
         }
+
 
         public void killEnemy(Zombie zombie)
         {

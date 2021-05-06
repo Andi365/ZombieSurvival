@@ -37,7 +37,8 @@ namespace GameClient.Controllers
 
             if (Input.GetKey(KeyCode.Space))
             {
-                if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), onGroundDist)) {
+                if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), onGroundDist))
+                {
                     rigidbody.velocity = new Vector3(0, jumpVel, 0);
                 }
             }
@@ -83,6 +84,13 @@ namespace GameClient.Controllers
                     Cursor.lockState = CursorLockMode.Locked;
                     Cursor.visible = false;
                 }
+            }
+
+            if (Input.GetKey(KeyCode.H))
+            {
+                Zombie zom = new Zombie(0, 1);
+                SpawnController spawn = new SpawnController();
+                spawn.spawnEnemy(zom);
             }
         }
 
