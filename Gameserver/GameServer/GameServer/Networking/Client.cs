@@ -4,8 +4,9 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using Data;
+using System.Collections.Concurrent;
 
-namespace GameServer
+namespace GameServer.Networking
 {
     class Client
     {
@@ -17,15 +18,21 @@ namespace GameServer
         public Client(int _clientId)
         {
             id = _clientId;
-            tcp = new TCP();
+            tcp = new TCP(ref Logic.LogicController.getInstance().getIncommingEventQueue());
         }
 
         public class TCP
         {
             public TcpClient socket;
 
+            private ConcurrentQueue<IData> eventQueue;
             private NetworkStream stream;
             private byte[] receiveBuffer;
+
+            public TCP(ref ConcurrentQueue<IData> queue)
+            {
+                eventQueue = queue;
+            }
 
             public void Connect(TcpClient _socket)
             {
@@ -52,7 +59,9 @@ namespace GameServer
                             socket.Close();
                             return;
                         case 0x01:
-                            Server.BroadcastData(DataFactory.BytesToData(receiveBuffer));
+                            IData d = DataFactory.BytesToData(receiveBuffer);
+                            eventQueue.Enqueue(d);
+                            Server.BroadcastData(d);
                             break;
                         default:
                             break;
