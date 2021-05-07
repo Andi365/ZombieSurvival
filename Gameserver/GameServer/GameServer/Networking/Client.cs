@@ -66,7 +66,6 @@ namespace GameServer.Networking
                             eventQueue.Enqueue(d);
                             break;
                     }
-                    Console.WriteLine(DataFactory.BytesToData(receiveBuffer));
                     stream.BeginRead(receiveBuffer, 0, dataBufferSize, new AsyncCallback(ReceiveCallback), null);
                 } catch (Exception e)
                 {
