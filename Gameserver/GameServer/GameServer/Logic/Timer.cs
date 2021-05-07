@@ -34,8 +34,6 @@ namespace GameServer.Logic
             double timeDiff = (now - last).TotalMilliseconds;
             MissingTicks += (float)(timeDiff / MSPerTick);
 
-            Console.WriteLine($"Missing ticks: {MissingTicks}");
-
             last = now;
 
             return MissingTick();

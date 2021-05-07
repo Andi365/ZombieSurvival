@@ -52,18 +52,18 @@ namespace GameServer.Networking
                 {
                     int _byteLength = stream.EndRead(_result);
 
-                    Console.WriteLine(receiveBuffer[0]);
+                    //Console.WriteLine(receiveBuffer[0]);
+                    IData d;
                     switch (receiveBuffer[0])
                     {
-                        case 0xFF:
+                        case DisconnectClient.Signature:
                             socket.Close();
-                            return;
-                        case 0x01:
-                            IData d = DataFactory.BytesToData(receiveBuffer);
+                            d = DataFactory.BytesToData(receiveBuffer);
                             eventQueue.Enqueue(d);
-                            Server.BroadcastData(d);
-                            break;
+                            return;
                         default:
+                            d = DataFactory.BytesToData(receiveBuffer);
+                            eventQueue.Enqueue(d);
                             break;
                     }
                     Console.WriteLine(DataFactory.BytesToData(receiveBuffer));

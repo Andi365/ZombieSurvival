@@ -1,13 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Data
 {
     class Zombie : IData
     {
-        static public byte Signature => 0b00000100;
-        byte IData.Signature() => Signature;
+        public const byte Signature = 0x10;
+        byte IData.Signature => Signature;
         public byte id;
         // Between 0..n-1 spawnpoints
         public byte spawnPoint;

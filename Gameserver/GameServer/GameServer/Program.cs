@@ -16,9 +16,9 @@ namespace GameServer
             t.IsBackground = true;
             t.Start();
 
-
-            LogicController lc = LogicController.getInstance();
-            lc.Start();
+            LogicController game = LogicController.getInstance();
+            game.SetTickrate(30);
+            game.Start();
 
             //Console.ReadKey();
         }

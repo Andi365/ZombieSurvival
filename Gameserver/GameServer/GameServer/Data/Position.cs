@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Data
 {
     class Position : IData
     {
-        static public byte Signature => 0b00000001;
+        public const byte Signature = 0x01;
+        byte IData.Signature => Signature;
 
-        byte IData.Signature() => Signature;
-
-        private float x, y, z;
+        private readonly float x, y, z;
 
         public Position(float x, float y, float z)
         {

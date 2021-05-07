@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Concurrent;
 using UnityEngine;
 using Data;
@@ -19,12 +19,12 @@ namespace GameClient.Controllers
         {
             IData data;
             queue.TryDequeue(out data);
-            switch (data.Signature())
+            switch (data.Signature)
             {
-                case 0x04:
+                case Zombie.Signature:
                     sc.spawnEnemy(data as Zombie);
                     break;
-                case 0x05:
+                case ZombieDead.Signature:
                     sc.killEnemy(data as Zombie);
                     break;
                 default:

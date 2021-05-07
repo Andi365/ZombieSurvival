@@ -34,6 +34,8 @@ namespace GameServer.Logic
             OutgoingEventQueue = new ConcurrentQueue<IData>();
         }
 
+        public void SetTickrate(int TPS) => Timer.TPS = TPS;
+
         private bool run = true;
         public void Start()
         {
@@ -56,7 +58,20 @@ namespace GameServer.Logic
             IData data;
             if (IncommingEventQueue.TryDequeue(out data))
             {
-                run = false;
+                switch (data.Signature)
+                {
+                    case Position.Signature:
+                        Console.WriteLine(data as Position);
+                        break;
+                    case DisconnectClient.Signature:
+                        Console.WriteLine("Client Disconnected");
+                        break;
+                    case StopServer.Signature:
+                        run = false;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
