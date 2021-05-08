@@ -8,7 +8,7 @@ namespace Data
     {
         public const byte Signature = 0xFD;
         byte IData.Signature => Signature;
-        private byte ID;
+        public byte ID;
 
         public AssignID(byte _ID)
         {
