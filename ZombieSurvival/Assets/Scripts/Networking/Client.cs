@@ -14,7 +14,6 @@ class Client : MonoBehaviour
     public static int dataBufferSize = 4096;
     public string ip = "127.0.0.1";
     public int port = 14000;
-    public int myId = 0;
     private TCP tcp;
 
     private void Awake()
