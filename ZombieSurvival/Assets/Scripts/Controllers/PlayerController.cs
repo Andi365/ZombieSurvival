@@ -16,7 +16,15 @@ namespace GameClient.Controllers
         public new Camera camera;
         public new Camera deathCam;
         bool esc;
-        public static byte myId;
+        public byte myId 
+        { 
+            get { return myId; }
+            set 
+            { 
+                myId = value; 
+                ps.playerId = myId;
+            } 
+        }
         public static PlayerController instance;
 
         private void Awake()
