@@ -7,38 +7,20 @@ namespace GameClient.Controllers
 {
     public class PlayerController : MonoBehaviour
     {
-        public static PlayerController instance;
         public float speed = 2f;
         public float jumpVel = 4f;
         public float onGroundDist = 1.01f;
         public float sensitivity = 1f;
-        public static byte myId { private get; set; }
         private new Rigidbody rigidbody;
         private PlayerState ps;
         public new Camera camera;
         public new Camera deathCam;
         bool esc;
-
-
-
-        private void Awake()
-        {
-            if (instance == null)
-            {
-                instance = this;
-            }
-            else if (instance != this)
-            {
-                Debug.Log("only one instance should exist");
-                Destroy(this);
-            }
-        }
-
-
         // Start is called before the first frame update
         void Start()
         {
             rigidbody = GetComponent<Rigidbody>();
+            ps = new PlayerState();
         }
 
         // Update is called once per frame
@@ -103,6 +85,13 @@ namespace GameClient.Controllers
                     Cursor.lockState = CursorLockMode.Locked;
                     Cursor.visible = false;
                 }
+            }
+
+            if (Input.GetKey(KeyCode.H))
+            {
+                Zombie zom = new Zombie(0, 1);
+                SpawnController spawn = new SpawnController();
+                spawn.spawnEnemy(zom);
             }
         }
 
