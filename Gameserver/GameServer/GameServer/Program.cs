@@ -11,13 +11,17 @@ namespace GameServer
         {
             Console.Title = "GameServer";
 
+            //Init data
+            LogicController game = LogicController.getInstance();
+            game.SetTickrate(30);
             Server.init(4, 33333);
+
+            //Start networking thread
             Thread t = new Thread(new ThreadStart(Server.Start));
             t.IsBackground = true;
             t.Start();
 
-            LogicController game = LogicController.getInstance();
-            game.SetTickrate(30);
+            //Start main thread
             game.Start();
 
             //Console.ReadKey();

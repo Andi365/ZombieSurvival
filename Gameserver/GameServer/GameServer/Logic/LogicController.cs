@@ -3,6 +3,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using GameServer.Networking;
 
 namespace GameServer.Logic
 {
@@ -16,22 +17,16 @@ namespace GameServer.Logic
             return instance;
         }
 
-        private ConcurrentQueue<IData> IncommingEventQueue;
-        private ConcurrentQueue<IData> OutgoingEventQueue;
+        private ConcurrentQueue<(int, IData)> IncommingEventQueue;
 
-        public ref ConcurrentQueue<IData> getIncommingEventQueue()
+        public ref ConcurrentQueue<(int, IData)> getIncommingEventQueue()
         {
             return ref IncommingEventQueue;
-        }
-        public ref ConcurrentQueue<IData> getOutgoingEventQueue()
-        {
-            return ref OutgoingEventQueue;
         }
 
         private LogicController() 
         {
-            IncommingEventQueue = new ConcurrentQueue<IData>();
-            OutgoingEventQueue = new ConcurrentQueue<IData>();
+            IncommingEventQueue = new ConcurrentQueue<(int, IData)>();
         }
 
         public void SetTickrate(int TPS) => Timer.TPS = TPS;
@@ -55,13 +50,14 @@ namespace GameServer.Logic
 
         private void Update()
         {
-            IData data;
+            (int, IData) data;
             if (IncommingEventQueue.TryDequeue(out data))
             {
-                switch (data.Signature)
+                switch (data.Item2.Signature)
                 {
                     case Position.Signature:
-                        Console.WriteLine(data as Position);
+                        Console.WriteLine($"{data.Item2 as Position} sent by {data.Item1}");
+                        Server.BroadcastData(data.Item2);
                         break;
                     case DisconnectClient.Signature:
                         Console.WriteLine("Client Disconnected");

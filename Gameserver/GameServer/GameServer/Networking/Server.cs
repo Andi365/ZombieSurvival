@@ -14,6 +14,7 @@ namespace GameServer.Networking
         public static int MaxPlayers { get; private set; }
         public static int Port { get; private set; }
         public static Dictionary<int, Client> clients = new Dictionary<int, Client>();
+        private static Queue<int> availableIDs;
 
         private static TcpListener tcpListener;
 
@@ -21,19 +22,21 @@ namespace GameServer.Networking
         {
             MaxPlayers = _maxPlayers;
             Port = _port;
+            availableIDs = new Queue<int>();
+            for (int i = 0; i < MaxPlayers; i++)
+            {
+                availableIDs.Enqueue(i);
+            }
         }
 
         public static void Start ()
         {
-            InitializeServerData();
-
             Console.WriteLine("Starting server");
             tcpListener = new TcpListener(IPAddress.Any, Port);
             tcpListener.Start();
             tcpListener.BeginAcceptTcpClient(new AsyncCallback(TCPConnectCallback), null);
 
-            Console.WriteLine($"Server booted on {Port}");
-
+            Console.WriteLine($"Server started on {Port}");
         }
 
         private static void TCPConnectCallback(IAsyncResult _result)
@@ -41,24 +44,13 @@ namespace GameServer.Networking
             TcpClient _client = tcpListener.EndAcceptTcpClient(_result);
             tcpListener.BeginAcceptTcpClient(new AsyncCallback(TCPConnectCallback), null);
 
-            Console.WriteLine($"Inbound connection from {_client.Client.RemoteEndPoint}");
-            for (int i = 1; i <= MaxPlayers; i++)
-            {
-                if (clients[i].tcp.socket == null)
-                {
-                    clients[i].tcp.Connect(_client);
-                    return;
-                }
-            }
-        }
+            int newClientID = availableIDs.Dequeue();
+            Client newClient = new Client(newClientID);
+            clients.Add(newClientID, newClient);
+            newClient.tcp.Connect(_client);
+            newClient.tcp.SendData(new AssignID((byte)newClientID));
 
-        private static void InitializeServerData()
-        {
-            for(int i = 0; i < MaxPlayers; i++)
-            {
-                clients.Add(i, new Client(i));
-            }
-
+            Console.WriteLine($"Inbound connection from {_client.Client.RemoteEndPoint}, connected as id {newClientID}");
         }
 
         private static void InitializeZombieSpawn()
@@ -72,16 +64,16 @@ namespace GameServer.Networking
             }
         }
 
-        private static void SendData(int _clientId, IData _data)
+        public static void SendData(int _clientId, IData _data)
         {
             clients[_clientId].tcp.SendData(_data);
         }
 
         public static void BroadcastData(IData _data)
         {
-            for(int i = 0; i < MaxPlayers; i++)
+            foreach (Client c in clients.Values)
             {
-                clients[i].tcp.SendData(_data);
+                c.tcp.SendData(_data);
             }
         }
     }

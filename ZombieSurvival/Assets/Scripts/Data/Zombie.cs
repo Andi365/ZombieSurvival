@@ -22,11 +22,12 @@ namespace Data
             this.spawnPoint = bytes[2];
         }
 
-        public int SizeOf() => 3;
+        public static int SizeOf => 3;
+        int IData.SizeOf() => SizeOf;
 
         public byte[] toBytes()
         {
-            byte[] bytes = new byte[3];
+            byte[] bytes = new byte[SizeOf];
             bytes[0] = Signature;
             bytes[1] = id;
             bytes[2] = spawnPoint;

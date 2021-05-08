@@ -23,11 +23,12 @@ namespace Data
             z = BitConverter.ToSingle(bytes, 9);
         }
 
-        public int SizeOf() => 13;
+        public static int SizeOf => 13;
+        int IData.SizeOf() => SizeOf;
 
         public byte[] toBytes()
         {
-            byte[] bytes = new byte[13];
+            byte[] bytes = new byte[SizeOf];
             bytes[0] = Signature;
             BitConverter.GetBytes(x).CopyTo(bytes, 1);
             BitConverter.GetBytes(y).CopyTo(bytes, 5);
