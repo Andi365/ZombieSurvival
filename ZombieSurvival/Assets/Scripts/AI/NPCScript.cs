@@ -23,25 +23,27 @@ public class NPCScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        agent.SetDestination(player.transform.position);
-
+        if (player != null)
+          agent.SetDestination(player.transform.position);
     }
 
     private void Update()
     {
         atkTimer -= Time.deltaTime;
 
-        if (Vector3.Distance(player.transform.position, trans.transform.position) <= 2)
+        if (player != null)
         {
-
-            if(atkTimer < 0)
+            if (Vector3.Distance(player.transform.position, trans.transform.position) <= 2)
             {
-                player.GetComponent<PlayerController>().updateHP(-10);
-                atkTimer = 1;
-                Debug.Log("atked");
-            }
-           
 
+                if(atkTimer < 0)
+                {
+                    Debug.Log("i atked");
+
+                    PlayerController.instance.updateHP(-50);
+                    atkTimer = 1;
+                }
+            }
         }
     }
 }

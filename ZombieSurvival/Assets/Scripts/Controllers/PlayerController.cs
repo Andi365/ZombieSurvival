@@ -17,6 +17,21 @@ namespace GameClient.Controllers
         public new Camera deathCam;
         bool esc;
         public static byte myId;
+        public static PlayerController instance;
+
+        private void Awake()
+        {
+            if (instance == null)
+            {
+                instance = this;
+            }
+            else if (instance != this)
+            {
+                Debug.Log("only one instance should exist");
+                Destroy(this);
+            }
+        }
+
         // Start is called before the first frame update
         void Start()
         {
@@ -96,13 +111,15 @@ namespace GameClient.Controllers
             }
         }
 
-        public void updateHP(int damageTaken)
+        public void updateHP(int healthChange)
         {
-            ps.Hp = ps.Hp - damageTaken;
-
+            ps.Hp = ps.Hp + healthChange;
+            
             if (ps.Hp <= 0)
             {
+                camera.gameObject.SetActive(false);
                 deathCam.gameObject.SetActive(true);
+                Destroy(gameObject);
             }
         }
     }
