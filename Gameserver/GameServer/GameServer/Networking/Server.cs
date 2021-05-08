@@ -31,15 +31,12 @@ namespace GameServer.Networking
 
         public static void Start ()
         {
-            //InitializeServerData();
-
             Console.WriteLine("Starting server");
             tcpListener = new TcpListener(IPAddress.Any, Port);
             tcpListener.Start();
             tcpListener.BeginAcceptTcpClient(new AsyncCallback(TCPConnectCallback), null);
 
-            Console.WriteLine($"Server booted on {Port}");
-
+            Console.WriteLine($"Server started on {Port}");
         }
 
         private static void TCPConnectCallback(IAsyncResult _result)
@@ -54,26 +51,6 @@ namespace GameServer.Networking
             newClient.tcp.SendData(new AssignID((byte)newClientID));
 
             Console.WriteLine($"Inbound connection from {_client.Client.RemoteEndPoint}, connected as id {newClientID}");
-            /*
-            for (int i = 0; i < MaxPlayers; i++)
-            {
-                if (clients[i].tcp.socket == null)
-                {
-                    clients[i].tcp.Connect(_client);
-                    clients[i].tcp.SendData(new AssignID((byte)i));
-                    return;
-                }
-            }
-            */
-        }
-
-        private static void InitializeServerData()
-        {
-            for(int i = 0; i < MaxPlayers; i++)
-            {
-                clients.Add(i, new Client(i));
-            }
-
         }
 
         private static void InitializeZombieSpawn()
@@ -94,15 +71,10 @@ namespace GameServer.Networking
 
         public static void BroadcastData(IData _data)
         {
-            foreach (Client c in clients.Values) {
+            foreach (Client c in clients.Values)
+            {
                 c.tcp.SendData(_data);
             }
-
-            /*
-            for(int i = 0; i < MaxPlayers; i++)
-            {
-                clients[i].tcp.SendData(_data);
-            }*/
         }
     }
 }
