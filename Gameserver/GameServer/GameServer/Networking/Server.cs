@@ -58,7 +58,7 @@ namespace GameServer.Networking
             Random random = new Random();
             for (int i = 0; i < 10; i++)
             {
-                Zombie zom = new Zombie(Convert.ToByte(i), 1);
+                ZombieSpawn zom = new ZombieSpawn(Convert.ToByte(i), 1);
 
                 BroadcastData(zom);
             }

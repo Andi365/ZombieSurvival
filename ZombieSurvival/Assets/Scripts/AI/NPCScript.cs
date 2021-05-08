@@ -40,7 +40,7 @@ public class NPCScript : MonoBehaviour
                 {
                     Debug.Log("i atked");
 
-                    PlayerController.instance.updateHP(-50);
+                    PlayerController.instance.updateHP(-10);
                     atkTimer = 1;
                 }
             }

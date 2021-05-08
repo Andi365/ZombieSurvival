@@ -9,7 +9,6 @@ namespace Data
 
         public StopServer() { }
         public StopServer(byte[] data) { }
-
         public static int SizeOf => 1;
         int IData.SizeOf() => SizeOf;
 

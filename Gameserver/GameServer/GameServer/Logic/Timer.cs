@@ -10,12 +10,14 @@ namespace GameServer.Logic
         private static readonly int MSPerSec = 1000;
         private static int tps = 1;
         private static int MSPerTick = MSPerSec / tps;
+        public static float deltaTime { get; private set; } = MSPerTick / (float)MSPerSec;
         public static int TPS {
             get { return tps; }
             set 
             { 
                 tps = value;
                 MSPerTick = MSPerSec / tps;
+                deltaTime = MSPerTick / (float)MSPerSec;
             }
         }
 

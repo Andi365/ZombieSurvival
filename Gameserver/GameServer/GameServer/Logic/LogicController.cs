@@ -21,6 +21,8 @@ namespace GameServer.Logic
             }
         }
 
+        private readonly SpawnController SC;
+
         private ConcurrentQueue<(byte, IData)> IncommingEventQueue;
 
         public ref ConcurrentQueue<(byte, IData)> getIncommingEventQueue()
@@ -30,7 +32,8 @@ namespace GameServer.Logic
 
         private LogicController() 
         {
-            IncommingEventQueue = new ConcurrentQueue<(byte, IData)>();
+            IncommingEventQueue = new ConcurrentQueue<(byte, IData)>(); 
+            SC = SpawnController.Instance;
         }
 
         public void SetTickrate(int TPS) => Timer.TPS = TPS;
@@ -39,6 +42,7 @@ namespace GameServer.Logic
         public void Start()
         {
             Timer.Init();
+            SC.Init();
 
             while (run)
             {
@@ -77,12 +81,15 @@ namespace GameServer.Logic
                         break;
                 }
             }
+
+            SC.Update();
+
         }
 
 
         private void End()
         {
-
+            SC.End();
         }
     }
 }
