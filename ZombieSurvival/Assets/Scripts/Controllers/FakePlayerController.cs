@@ -39,13 +39,11 @@ namespace GameClient.Controllers
 
         public void handlePlayer(PlayerState ps) 
         {
-            Debug.Log("HandlePlayer method call");
             if (fakePlayers.ContainsKey(ps.playerId)) 
             {
-                Debug.Log("Fake player exists");
+                fakePlayers[ps.playerId].UpdatePlayerState(ps);
             } else
             {
-                Debug.Log("Fake player does not exist");
                 AddFakePlayer(ps);
             }
         }

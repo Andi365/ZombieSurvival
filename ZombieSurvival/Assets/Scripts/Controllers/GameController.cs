@@ -9,7 +9,8 @@ namespace GameClient.Controllers
     {
         public static GameController instance;
         public SpawnController sc { private get; set; }
-        public static ConcurrentQueue<IData> queue = new ConcurrentQueue<IData>();
+        public ConcurrentQueue<IData> queue = new ConcurrentQueue<IData>();
+        public ConcurrentQueue<IData> outgoingQueue = new ConcurrentQueue<IData>();
 
         private void Awake()
         {
@@ -47,10 +48,8 @@ namespace GameClient.Controllers
                         break;
                     case PlayerState.Signature:
                         PlayerState ps = data as PlayerState;
-                        Debug.Log("Handle playerstate signature");
                         if (ps.playerId != PlayerController.myId) 
                         {
-                            Debug.Log("Handle playerstate signature for fake player");
                             FakePlayerController.instance.handlePlayer(ps);
                         }
                         break;

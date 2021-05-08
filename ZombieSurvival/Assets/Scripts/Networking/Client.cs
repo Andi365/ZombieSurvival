@@ -44,6 +44,12 @@ class Client : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
             SendData(new StopServer());
 
+        IData data;
+        if (GameController.instance.outgoingQueue.TryDequeue(out data)) 
+        {
+            SendData(data);
+        }
+
     }
 
     public void SendData(IData data)
@@ -87,7 +93,7 @@ class Client : MonoBehaviour
         {
             NetworkStream stream = (NetworkStream)_result.AsyncState;
             int _byteLength = stream.EndRead(_result);
-            GameController.queue.Enqueue(DataFactory.BytesToData(receiveBuffer));
+            GameController.instance.queue.Enqueue(DataFactory.BytesToData(receiveBuffer));
             stream.BeginRead(receiveBuffer, 0, dataBufferSize, new AsyncCallback(DataCallback), stream);
         }
 

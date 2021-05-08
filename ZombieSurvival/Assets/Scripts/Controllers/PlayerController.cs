@@ -111,6 +111,16 @@ namespace GameClient.Controllers
             }
         }
 
+        float sendDataTimer = 1f;
+        private void Update() {
+            sendDataTimer -= Time.deltaTime;
+            if (sendDataTimer < 0) 
+            {
+                GameController.instance.outgoingQueue.Enqueue(ps);
+                sendDataTimer = 1f;
+            }
+        }
+
         public void updateHP(int healthChange)
         {
             ps.Hp = ps.Hp + healthChange;
