@@ -59,6 +59,10 @@ namespace GameServer.Logic
                         Console.WriteLine($"{data.Item2 as Position} sent by {data.Item1}");
                         Server.BroadcastData(data.Item2);
                         break;
+                    case PlayerState.Signature:
+                        Console.WriteLine($"{data.Item2 as PlayerState} sent by {data.Item1}");
+                        Server.BroadcastData(data.Item2);
+                        break;
                     case DisconnectClient.Signature:
                         Console.WriteLine("Client Disconnected");
                         break;

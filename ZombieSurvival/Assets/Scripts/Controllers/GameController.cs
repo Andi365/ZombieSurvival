@@ -30,6 +30,7 @@ namespace GameClient.Controllers
             IData data;
             if (queue.TryDequeue(out data))
             {
+                Debug.Log(data);
                 switch (data.Signature)
                 {
                     case AssignID.Signature:
@@ -44,11 +45,19 @@ namespace GameClient.Controllers
                         Zombie zom1 = new Zombie(data.toBytes());
                         SpawnController.instance.killEnemy(zom1);
                         break;
+                    case PlayerState.Signature:
+                        PlayerState ps = data as PlayerState;
+                        Debug.Log("Handle playerstate signature");
+                        if (ps.playerId != PlayerController.myId) 
+                        {
+                            Debug.Log("Handle playerstate signature for fake player");
+                            FakePlayerController.instance.handlePlayer(ps);
+                        }
+                        break;
                     default:
                         break;
                 }
             }
-
         }
     }
 }
