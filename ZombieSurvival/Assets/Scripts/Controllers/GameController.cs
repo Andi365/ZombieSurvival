@@ -9,7 +9,7 @@ namespace GameClient.Controllers
     {
         public static GameController instance;
         public SpawnController sc { private get; set; }
-        public static ConcurrentQueue<IData> queue;
+        public static ConcurrentQueue<IData> queue = new ConcurrentQueue<IData>();
 
         private void Awake()
         {
