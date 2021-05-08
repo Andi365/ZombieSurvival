@@ -19,10 +19,8 @@ namespace Data
             ClientID = data[1];
         }
 
-        public int SizeOf()
-        {
-            return 2;
-        }
+        public static int SizeOf => 2;
+        int IData.SizeOf() => SizeOf;
 
         public byte[] toBytes()
         {
