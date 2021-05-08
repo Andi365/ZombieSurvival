@@ -14,6 +14,7 @@ namespace GameServer.Networking
         public static int MaxPlayers { get; private set; }
         public static int Port { get; private set; }
         public static Dictionary<int, Client> clients = new Dictionary<int, Client>();
+        private static Queue<int> availableIDs;
 
         private static TcpListener tcpListener;
 
@@ -21,11 +22,16 @@ namespace GameServer.Networking
         {
             MaxPlayers = _maxPlayers;
             Port = _port;
+            availableIDs = new Queue<int>();
+            for (int i = 0; i < MaxPlayers; i++)
+            {
+                availableIDs.Enqueue(i);
+            }
         }
 
         public static void Start ()
         {
-            InitializeServerData();
+            //InitializeServerData();
 
             Console.WriteLine("Starting server");
             tcpListener = new TcpListener(IPAddress.Any, Port);
@@ -41,7 +47,14 @@ namespace GameServer.Networking
             TcpClient _client = tcpListener.EndAcceptTcpClient(_result);
             tcpListener.BeginAcceptTcpClient(new AsyncCallback(TCPConnectCallback), null);
 
-            Console.WriteLine($"Inbound connection from {_client.Client.RemoteEndPoint}");
+            int newClientID = availableIDs.Dequeue();
+            Client newClient = new Client(newClientID);
+            clients.Add(newClientID, newClient);
+            newClient.tcp.Connect(_client);
+            newClient.tcp.SendData(new AssignID((byte)newClientID));
+
+            Console.WriteLine($"Inbound connection from {_client.Client.RemoteEndPoint}, connected as id {newClientID}");
+            /*
             for (int i = 0; i < MaxPlayers; i++)
             {
                 if (clients[i].tcp.socket == null)
@@ -51,6 +64,7 @@ namespace GameServer.Networking
                     return;
                 }
             }
+            */
         }
 
         private static void InitializeServerData()
@@ -80,10 +94,15 @@ namespace GameServer.Networking
 
         public static void BroadcastData(IData _data)
         {
+            foreach (Client c in clients.Values) {
+                c.tcp.SendData(_data);
+            }
+
+            /*
             for(int i = 0; i < MaxPlayers; i++)
             {
                 clients[i].tcp.SendData(_data);
-            }
+            }*/
         }
     }
 }

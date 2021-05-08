@@ -10,7 +10,7 @@ namespace GameServer.Networking
 {
     class Client
     {
-        public static int dataBufferSize = 4096;
+        public const int dataBufferSize = 4096;
 
         public int id;
         public TCP tcp;
@@ -18,19 +18,22 @@ namespace GameServer.Networking
         public Client(int _clientId)
         {
             id = _clientId;
-            tcp = new TCP(ref Logic.LogicController.getInstance().getIncommingEventQueue());
+            tcp = new TCP(id, ref Logic.LogicController.getInstance().getIncommingEventQueue());
         }
 
         public class TCP
         {
             public TcpClient socket;
 
-            private ConcurrentQueue<IData> eventQueue;
+            private ConcurrentQueue<(int, IData)> eventQueue;
+            private int clientID;
+
             private NetworkStream stream;
             private byte[] receiveBuffer;
 
-            public TCP(ref ConcurrentQueue<IData> queue)
+            public TCP(int id, ref ConcurrentQueue<(int, IData)> queue)
             {
+                clientID = id;
                 eventQueue = queue;
             }
 
@@ -59,11 +62,11 @@ namespace GameServer.Networking
                         case DisconnectClient.Signature:
                             socket.Close();
                             d = DataFactory.BytesToData(receiveBuffer);
-                            eventQueue.Enqueue(d);
+                            eventQueue.Enqueue((clientID, d));
                             return;
                         default:
                             d = DataFactory.BytesToData(receiveBuffer);
-                            eventQueue.Enqueue(d);
+                            eventQueue.Enqueue((clientID, d));
                             break;
                     }
                     stream.BeginRead(receiveBuffer, 0, dataBufferSize, new AsyncCallback(ReceiveCallback), null);
