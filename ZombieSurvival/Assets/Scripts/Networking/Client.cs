@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Sockets;
 using Data;
 using System.Threading;
+using GameClient.Controllers;
 
 class Client : MonoBehaviour
 {
@@ -38,13 +39,13 @@ class Client : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F))
-            SendData(new Position(1,2,3));
+            SendData(new Position(1, 2, 3));
         if (Input.GetKeyDown(KeyCode.Q))
             SendData(new StopServer());
 
     }
 
-    public void SendData(IData data) 
+    public void SendData(IData data)
     {
         tcp.Send(data.toBytes(), data.SizeOf());
     }
@@ -70,7 +71,7 @@ class Client : MonoBehaviour
             socket.BeginConnect(instance.ip, instance.port, new AsyncCallback(ConnectedCallback), socket);
         }
 
-        private void ConnectedCallback(IAsyncResult _result) 
+        private void ConnectedCallback(IAsyncResult _result)
         {
             TcpClient socket = (TcpClient)_result.AsyncState;
             socket.EndConnect(_result);
@@ -81,24 +82,11 @@ class Client : MonoBehaviour
             stream.BeginRead(receiveBuffer, 0, dataBufferSize, new AsyncCallback(DataCallback), stream);
         }
 
-        private void DataCallback(IAsyncResult _result) 
+        private void DataCallback(IAsyncResult _result)
         {
             NetworkStream stream = (NetworkStream)_result.AsyncState;
             int _byteLength = stream.EndRead(_result);
-            switch (receiveBuffer[0])
-            {
-                case 0xFF:
-                    socket.Close();
-                    return;
-                case 0x01:
-                    Debug.Log(DataFactory.BytesToData(receiveBuffer));
-                    break;
-                case 0x04:
-                    //do zombie shit
-                    break;
-                default:
-                    break;
-            }
+            GameController.queue.Enqueue(DataFactory.BytesToData(receiveBuffer));
             stream.BeginRead(receiveBuffer, 0, dataBufferSize, new AsyncCallback(DataCallback), stream);
         }
 
@@ -120,7 +108,8 @@ class Client : MonoBehaviour
         }
 
     }
-    private void OnApplicationQuit() {
+    private void OnApplicationQuit()
+    {
         SendData(new DisconnectClient(0));
         tcp.socket.Close();
     }

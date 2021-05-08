@@ -85,13 +85,6 @@ namespace GameClient.Controllers
                     Cursor.visible = false;
                 }
             }
-
-            if (Input.GetKey(KeyCode.H))
-            {
-                Zombie zom = new Zombie(0, 1);
-                SpawnController spawn = new SpawnController();
-                spawn.spawnEnemy(zom);
-            }
         }
 
         public void updateHP(int damageTaken)
