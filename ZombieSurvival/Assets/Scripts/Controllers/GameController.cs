@@ -32,6 +32,9 @@ namespace GameClient.Controllers
             {
                 switch (data.Signature)
                 {
+                    case AssignID.Signature:
+                        PlayerController.myId = (data as AssignID).ID;
+                        break;
                     case Zombie.Signature:
                         Zombie zom = new Zombie(data.toBytes());
                         SpawnController.instance.spawnEnemy(zom);
