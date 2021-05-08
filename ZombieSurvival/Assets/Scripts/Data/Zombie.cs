@@ -22,7 +22,8 @@ namespace Data
             this.spawnPoint = bytes[2];
         }
 
-        public int SizeOf() => 3;
+        public static int SizeOf => 3;
+        int IData.SizeOf() => SizeOf;
 
         public byte[] toBytes()
         {
