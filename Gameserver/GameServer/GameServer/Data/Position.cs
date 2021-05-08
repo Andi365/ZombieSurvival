@@ -7,7 +7,7 @@ namespace Data
         public const byte Signature = 0x01;
         byte IData.Signature => Signature;
 
-        public readonly float x, y, z, yRot;
+        public float x, y, z, yRot;
 
         public Position(float x, float y, float z, float yRot)
         {

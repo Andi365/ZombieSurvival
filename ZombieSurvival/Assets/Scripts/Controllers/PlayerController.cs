@@ -109,6 +109,9 @@ namespace GameClient.Controllers
                 SpawnController spawn = new SpawnController();
                 spawn.spawnEnemy(zom);
             }
+            ps.position.x = transform.position.x;
+            ps.position.y = transform.position.y;
+            ps.position.z = transform.position.z;
         }
 
         float sendDataTimer = 1f;
