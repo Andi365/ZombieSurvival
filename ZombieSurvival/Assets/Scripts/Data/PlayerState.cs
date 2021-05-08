@@ -37,7 +37,7 @@ namespace Data
             playerId = _playerId;
             Hp = 100;
             Ammo = 60;
-            position = new Position(0, 0, 0);
+            position = new Position(0, 0, 0, 0);
         }
 
         public int Hp { get; set; } = 100;

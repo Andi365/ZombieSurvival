@@ -7,38 +7,41 @@ namespace Data
         public const byte Signature = 0x01;
         byte IData.Signature => Signature;
 
-        private readonly float x, y, z;
+        public readonly float x, y, z, yRot;
 
-        public Position(float x, float y, float z)
+        public Position(float x, float y, float z, float yRot)
         {
             this.x = x;
             this.y = y;
             this.z = z;
+            this.yRot = yRot;
         }
 
         public Position(byte[] bytes)
         {
-            x = BitConverter.ToSingle(bytes, 1);
-            y = BitConverter.ToSingle(bytes, 5);
-            z = BitConverter.ToSingle(bytes, 9);
+            x = BitConverter.ToSingle(bytes, sizeof(float) * 0 + 1);
+            y = BitConverter.ToSingle(bytes, sizeof(float) * 1 + 1);
+            z = BitConverter.ToSingle(bytes, sizeof(float) * 2 + 1);
+            yRot = BitConverter.ToSingle(bytes, sizeof(float) * 3 + 1);
         }
 
-        public static int SizeOf => 13;
+        public static int SizeOf => sizeof(float) * 4 + 1;
         int IData.SizeOf() => SizeOf;
 
         public byte[] toBytes()
         {
             byte[] bytes = new byte[SizeOf];
             bytes[0] = Signature;
-            BitConverter.GetBytes(x).CopyTo(bytes, 1);
-            BitConverter.GetBytes(y).CopyTo(bytes, 5);
-            BitConverter.GetBytes(z).CopyTo(bytes, 9);
+            BitConverter.GetBytes(x).CopyTo(bytes, sizeof(float) * 0 + 1);
+            BitConverter.GetBytes(y).CopyTo(bytes, sizeof(float) * 1 + 1);
+            BitConverter.GetBytes(z).CopyTo(bytes, sizeof(float) * 2 + 1);
+            BitConverter.GetBytes(yRot).CopyTo(bytes, sizeof(float) * 3 + 1);
             return bytes;
         }
 
         override public string ToString()
         {
-            return String.Format("X: {0}, Y: {1}, Z: {2}", x, y, z);
+            return String.Format("X: {0}, Y: {1}, Z: {2}, yRot: {3}", x, y, z, yRot);
         }
     }
 }
