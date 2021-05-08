@@ -13,8 +13,8 @@ namespace GameServer.Networking
     {
         public static int MaxPlayers { get; private set; }
         public static int Port { get; private set; }
-        public static Dictionary<int, Client> clients = new Dictionary<int, Client>();
-        private static Queue<int> availableIDs;
+        public static Dictionary<byte, Client> clients = new Dictionary<byte, Client>();
+        private static Queue<byte> availableIDs;
 
         private static TcpListener tcpListener;
 
@@ -22,8 +22,8 @@ namespace GameServer.Networking
         {
             MaxPlayers = _maxPlayers;
             Port = _port;
-            availableIDs = new Queue<int>();
-            for (int i = 0; i < MaxPlayers; i++)
+            availableIDs = new Queue<byte>();
+            for (byte i = 0; i < MaxPlayers; i++)
             {
                 availableIDs.Enqueue(i);
             }
@@ -44,11 +44,11 @@ namespace GameServer.Networking
             TcpClient _client = tcpListener.EndAcceptTcpClient(_result);
             tcpListener.BeginAcceptTcpClient(new AsyncCallback(TCPConnectCallback), null);
 
-            int newClientID = availableIDs.Dequeue();
+            byte newClientID = availableIDs.Dequeue();
             Client newClient = new Client(newClientID);
             clients.Add(newClientID, newClient);
             newClient.tcp.Connect(_client);
-            newClient.tcp.SendData(new AssignID((byte)newClientID));
+            newClient.tcp.SendData(new AssignID(newClientID));
 
             Console.WriteLine($"Inbound connection from {_client.Client.RemoteEndPoint}, connected as id {newClientID}");
         }
@@ -64,7 +64,7 @@ namespace GameServer.Networking
             }
         }
 
-        public static void SendData(int _clientId, IData _data)
+        public static void SendData(byte _clientId, IData _data)
         {
             clients[_clientId].tcp.SendData(_data);
         }
@@ -75,6 +75,12 @@ namespace GameServer.Networking
             {
                 c.tcp.SendData(_data);
             }
+        }
+
+        public static void removeUser(byte id)
+        {
+            clients.Remove(id);
+            availableIDs.Enqueue(id);
         }
     }
 }

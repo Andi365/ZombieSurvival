@@ -12,10 +12,10 @@ namespace GameServer.Networking
     {
         public const int dataBufferSize = 4096;
 
-        public int id;
+        public byte id;
         public TCP tcp;
 
-        public Client(int _clientId)
+        public Client(byte _clientId)
         {
             id = _clientId;
             tcp = new TCP(id, ref Logic.LogicController.getInstance().getIncommingEventQueue());
@@ -25,13 +25,13 @@ namespace GameServer.Networking
         {
             public TcpClient socket;
 
-            private ConcurrentQueue<(int, IData)> eventQueue;
-            private int clientID;
+            private ConcurrentQueue<(byte, IData)> eventQueue;
+            private byte clientID;
 
             private NetworkStream stream;
             private byte[] receiveBuffer;
 
-            public TCP(int id, ref ConcurrentQueue<(int, IData)> queue)
+            public TCP(byte id, ref ConcurrentQueue<(byte, IData)> queue)
             {
                 clientID = id;
                 eventQueue = queue;
@@ -63,6 +63,7 @@ namespace GameServer.Networking
                             socket.Close();
                             d = DataFactory.BytesToData(receiveBuffer);
                             eventQueue.Enqueue((clientID, d));
+                            Server.removeUser(clientID);
                             return;
                         default:
                             d = DataFactory.BytesToData(receiveBuffer);

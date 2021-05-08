@@ -17,16 +17,16 @@ namespace GameServer.Logic
             return instance;
         }
 
-        private ConcurrentQueue<(int, IData)> IncommingEventQueue;
+        private ConcurrentQueue<(byte, IData)> IncommingEventQueue;
 
-        public ref ConcurrentQueue<(int, IData)> getIncommingEventQueue()
+        public ref ConcurrentQueue<(byte, IData)> getIncommingEventQueue()
         {
             return ref IncommingEventQueue;
         }
 
         private LogicController() 
         {
-            IncommingEventQueue = new ConcurrentQueue<(int, IData)>();
+            IncommingEventQueue = new ConcurrentQueue<(byte, IData)>();
         }
 
         public void SetTickrate(int TPS) => Timer.TPS = TPS;
@@ -50,7 +50,7 @@ namespace GameServer.Logic
 
         private void Update()
         {
-            (int, IData) data;
+            (byte, IData) data;
             if (IncommingEventQueue.TryDequeue(out data))
             {
                 switch (data.Item2.Signature)
