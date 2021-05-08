@@ -26,6 +26,7 @@ namespace GameClient.AI
             playerState = ps;
             Position psPos = playerState.position;
             transform.position = new Vector3(psPos.x, psPos.y, psPos.z);
+            transform.rotation = Quaternion.Euler(0, psPos.yRot, 0);
         }
     }
 }

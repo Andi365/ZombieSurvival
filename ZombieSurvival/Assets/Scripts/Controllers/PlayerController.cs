@@ -122,15 +122,16 @@ namespace GameClient.Controllers
             ps.position.x = transform.position.x;
             ps.position.y = transform.position.y;
             ps.position.z = transform.position.z;
+            ps.position.yRot = transform.rotation.eulerAngles.y;
         }
 
-        float sendDataTimer = 1f;
+        float sendDataTimer = 0.1f;
         private void Update() {
             sendDataTimer -= Time.deltaTime;
             if (sendDataTimer < 0) 
             {
                 GameController.instance.outgoingQueue.Enqueue(ps);
-                sendDataTimer = 1f;
+                sendDataTimer = 0.1f;
             }
         }
 
