@@ -27,7 +27,7 @@ namespace Data
 
         public byte[] toBytes()
         {
-            byte[] bytes = new byte[3];
+            byte[] bytes = new byte[SizeOf];
             bytes[0] = Signature;
             bytes[1] = id;
             bytes[2] = spawnPoint;

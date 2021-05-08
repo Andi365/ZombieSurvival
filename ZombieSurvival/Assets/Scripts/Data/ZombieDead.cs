@@ -23,7 +23,7 @@ namespace Data
 
         public byte[] toBytes()
         {
-            byte[] bytes = new byte[2];
+            byte[] bytes = new byte[SizeOf];
             bytes[0] = Signature;
             bytes[1] = id;
             return bytes;
