@@ -42,11 +42,12 @@ namespace GameServer.Networking
             tcpListener.BeginAcceptTcpClient(new AsyncCallback(TCPConnectCallback), null);
 
             Console.WriteLine($"Inbound connection from {_client.Client.RemoteEndPoint}");
-            for (int i = 1; i <= MaxPlayers; i++)
+            for (int i = 0; i < MaxPlayers; i++)
             {
                 if (clients[i].tcp.socket == null)
                 {
                     clients[i].tcp.Connect(_client);
+                    clients[i].tcp.SendData(new AssignID((byte)i));
                     return;
                 }
             }
@@ -72,7 +73,7 @@ namespace GameServer.Networking
             }
         }
 
-        private static void SendData(int _clientId, IData _data)
+        public static void SendData(int _clientId, IData _data)
         {
             clients[_clientId].tcp.SendData(_data);
         }
