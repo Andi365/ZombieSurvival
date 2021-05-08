@@ -35,7 +35,7 @@ namespace GameClient.Controllers
                 switch (data.Signature)
                 {
                     case AssignID.Signature:
-                        PlayerController.instance.myId = (data as AssignID).ID;
+                        PlayerController.instance.MyID = (data as AssignID).ID;
                         break;
                     case Zombie.Signature:
                         Zombie zom = new Zombie(data.toBytes());
@@ -48,7 +48,7 @@ namespace GameClient.Controllers
                         break;
                     case PlayerState.Signature:
                         PlayerState ps = data as PlayerState;
-                        if (ps.playerId != PlayerController.instance.myId) 
+                        if (ps.playerId != PlayerController.instance.MyID) 
                         {
                             FakePlayerController.instance.handlePlayer(ps);
                         }

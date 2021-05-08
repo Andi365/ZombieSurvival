@@ -16,13 +16,15 @@ namespace GameClient.Controllers
         public new Camera camera;
         public new Camera deathCam;
         bool esc;
-        public byte myId 
+
+        private byte myID;
+        public byte MyID
         { 
-            get { return myId; }
+            get { return myID; }
             set 
             { 
-                myId = value; 
-                ps.playerId = myId;
+                myID = value; 
+                ps.playerId = myID;
             } 
         }
         public static PlayerController instance;
@@ -44,7 +46,7 @@ namespace GameClient.Controllers
         void Start()
         {
             rigidbody = GetComponent<Rigidbody>();
-            ps = new PlayerState(myId);
+            ps = new PlayerState(myID);
         }
 
         // Update is called once per frame

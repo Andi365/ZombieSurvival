@@ -40,7 +40,7 @@ class Client : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
             SendData(new Position(1, 2, 3, 0));
         if (Input.GetKeyDown(KeyCode.P))
-            SendData(new PlayerState(PlayerController.instance.myId));
+            SendData(new PlayerState(PlayerController.instance.MyID));
         if (Input.GetKeyDown(KeyCode.Q))
             SendData(new StopServer());
 
