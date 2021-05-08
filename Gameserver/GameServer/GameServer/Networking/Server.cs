@@ -7,7 +7,7 @@ using Data;
 
 using System.Threading;
 
-namespace GameServer
+namespace GameServer.Networking
 {
     static class Server
     {
@@ -17,10 +17,14 @@ namespace GameServer
 
         private static TcpListener tcpListener;
 
-        public static void Start (int _maxPlayers, int _port)
+        public static void init(int _maxPlayers, int _port)
         {
             MaxPlayers = _maxPlayers;
             Port = _port;
+        }
+
+        public static void Start ()
+        {
             InitializeServerData();
 
             Console.WriteLine("Starting server");

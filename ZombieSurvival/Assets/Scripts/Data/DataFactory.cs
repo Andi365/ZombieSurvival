@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
 
 namespace Data
 {
     class DataFactory
     {
-        private static Dictionary<byte, Func<byte[], IData>> SignatureToImplementation = new Dictionary<byte, Func<byte[], IData>>()
+        private static Dictionary<byte, Func<byte[], IData>> SignatureToImplementation = new Dictionary<byte, Func<byte[], IData>>() 
         {
             { Position.Signature, n => new Position(n) },
+            { PlayerState.Signature, n => new PlayerState(n) },
             { Zombie.Signature, n => new Zombie(n) },
-            { ZombieDead.Signature, n => new ZombieDead(n) }
+            { ZombieDead.Signature, n => new ZombieDead(n) },
+            { DisconnectClient.Signature, n => new DisconnectClient(n) },
+            { StopServer.Signature, n => new StopServer(n) }
         };
 
         public static IData BytesToData(byte[] bytes)

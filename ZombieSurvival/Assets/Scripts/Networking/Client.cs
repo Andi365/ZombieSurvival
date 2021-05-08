@@ -7,14 +7,14 @@ using System.Net.Sockets;
 using Data;
 using System.Threading;
 
-public class Client : MonoBehaviour
+class Client : MonoBehaviour
 {
     public static Client instance;
     public static int dataBufferSize = 4096;
     public string ip = "127.0.0.1";
     public int port = 14000;
     public int myId = 0;
-    public TCP tcp;
+    private TCP tcp;
 
     private void Awake()
     {
@@ -38,14 +38,15 @@ public class Client : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F))
-        {
-            SendMessage();
-        }
+            SendData(new Position(1,2,3));
+        if (Input.GetKeyDown(KeyCode.Q))
+            SendData(new StopServer());
+
     }
 
-    private void SendMessage()
+    public void SendData(IData data) 
     {
-        tcp.Send(new Position(1, 2, 3).toBytes(), 13);
+        tcp.Send(data.toBytes(), data.SizeOf());
     }
 
     public void ConnectToServer()
@@ -53,7 +54,7 @@ public class Client : MonoBehaviour
         tcp.Connect();
     }
 
-    public class TCP
+    class TCP
     {
         public TcpClient socket;
         private NetworkStream stream;
@@ -117,9 +118,10 @@ public class Client : MonoBehaviour
                 Console.WriteLine("Dø i et hul");
             }
         }
+
     }
     private void OnApplicationQuit() {
-        tcp.Send(new byte[]{ 0xFF }, 1);
+        SendData(new DisconnectClient(0));
         tcp.socket.Close();
     }
 }

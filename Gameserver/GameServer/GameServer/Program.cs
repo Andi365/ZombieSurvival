@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Threading;
+using GameServer.Logic;
+using GameServer.Networking;
 
 namespace GameServer
 {
@@ -7,10 +10,17 @@ namespace GameServer
         static void Main(string[] args)
         {
             Console.Title = "GameServer";
-            Server.Start(4, 33333);
-            Console.ReadKey();
 
+            Server.init(4, 33333);
+            Thread t = new Thread(new ThreadStart(Server.Start));
+            t.IsBackground = true;
+            t.Start();
+
+            LogicController game = LogicController.getInstance();
+            game.SetTickrate(30);
+            game.Start();
+
+            //Console.ReadKey();
         }
-
     }
 }

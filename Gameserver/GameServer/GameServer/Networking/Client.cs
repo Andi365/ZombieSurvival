@@ -4,8 +4,9 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using Data;
+using System.Collections.Concurrent;
 
-namespace GameServer
+namespace GameServer.Networking
 {
     class Client
     {
@@ -17,15 +18,21 @@ namespace GameServer
         public Client(int _clientId)
         {
             id = _clientId;
-            tcp = new TCP();
+            tcp = new TCP(ref Logic.LogicController.getInstance().getIncommingEventQueue());
         }
 
         public class TCP
         {
             public TcpClient socket;
 
+            private ConcurrentQueue<IData> eventQueue;
             private NetworkStream stream;
             private byte[] receiveBuffer;
+
+            public TCP(ref ConcurrentQueue<IData> queue)
+            {
+                eventQueue = queue;
+            }
 
             public void Connect(TcpClient _socket)
             {
@@ -45,19 +52,20 @@ namespace GameServer
                 {
                     int _byteLength = stream.EndRead(_result);
 
-                    Console.WriteLine(receiveBuffer[0]);
+                    //Console.WriteLine(receiveBuffer[0]);
+                    IData d;
                     switch (receiveBuffer[0])
                     {
-                        case 0xFF:
+                        case DisconnectClient.Signature:
                             socket.Close();
+                            d = DataFactory.BytesToData(receiveBuffer);
+                            eventQueue.Enqueue(d);
                             return;
-                        case 0x01:
-                            Server.BroadcastData(DataFactory.BytesToData(receiveBuffer));
-                            break;
                         default:
+                            d = DataFactory.BytesToData(receiveBuffer);
+                            eventQueue.Enqueue(d);
                             break;
                     }
-                    Console.WriteLine(DataFactory.BytesToData(receiveBuffer));
                     stream.BeginRead(receiveBuffer, 0, dataBufferSize, new AsyncCallback(ReceiveCallback), null);
                 } catch (Exception e)
                 {

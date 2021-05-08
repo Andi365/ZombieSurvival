@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Data
 {
     interface IData
     {
+        byte Signature { get; }
         byte[] toBytes();
-        byte Signature();
         int SizeOf();
     }
 }
