@@ -10,11 +10,15 @@ namespace GameServer.Logic
     class LogicController
     {
         private static LogicController instance;
-        public static LogicController getInstance()
+        public static LogicController Instance 
         {
-            if (instance == null)
-                instance = new LogicController();
-            return instance;
+            private set { instance = value; }
+            get 
+            {
+                if (instance == null)
+                    instance = new LogicController();
+                return instance;
+            }
         }
 
         private ConcurrentQueue<(byte, IData)> IncommingEventQueue;

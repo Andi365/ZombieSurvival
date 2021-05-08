@@ -18,7 +18,7 @@ namespace GameServer.Networking
         public Client(byte _clientId)
         {
             id = _clientId;
-            tcp = new TCP(id, ref Logic.LogicController.getInstance().getIncommingEventQueue());
+            tcp = new TCP(id, ref Logic.LogicController.Instance.getIncommingEventQueue());
         }
 
         public class TCP

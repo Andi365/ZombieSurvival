@@ -12,7 +12,7 @@ namespace GameServer
             Console.Title = "GameServer";
 
             //Init data
-            LogicController game = LogicController.getInstance();
+            LogicController game = LogicController.Instance;
             game.SetTickrate(30);
             Server.init(4, 33333);
 
