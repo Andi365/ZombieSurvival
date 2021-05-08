@@ -14,6 +14,7 @@ namespace GameClient.Controllers
         private new Rigidbody rigidbody;
         private PlayerState ps;
         public new Camera camera;
+        public new Camera deathCam;
         bool esc;
         // Start is called before the first frame update
         void Start()
@@ -100,7 +101,7 @@ namespace GameClient.Controllers
 
             if (ps.Hp <= 0)
             {
-                //DIE
+                
             }
         }
     }

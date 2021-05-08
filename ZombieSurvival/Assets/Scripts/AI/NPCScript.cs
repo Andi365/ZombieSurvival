@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using GameClient.Controllers;
 
 public class NPCScript : MonoBehaviour
 {
     private Transform trans;
-
     public NavMeshAgent agent;
-
     public GameObject player;
+
+    private float atkTimer = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -22,8 +23,25 @@ public class NPCScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        trans.position += trans.right * Time.deltaTime;
-
         agent.SetDestination(player.transform.position);
+
+    }
+
+    private void Update()
+    {
+        atkTimer -= Time.deltaTime;
+
+        if (Vector3.Distance(player.transform.position, trans.transform.position) <= 2)
+        {
+
+            if(atkTimer < 0)
+            {
+                player.GetComponent<PlayerController>().updateHP(-10);
+                atkTimer = 1;
+                Debug.Log("atked");
+            }
+           
+
+        }
     }
 }
