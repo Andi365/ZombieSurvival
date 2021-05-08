@@ -5,7 +5,7 @@ using Data;
 
 namespace GameClient.Controllers
 {
-    public class PlayerController : MonoBehaviour
+    class PlayerController : MonoBehaviour
     {
         public float speed = 2f;
         public float jumpVel = 4f;
@@ -16,11 +16,12 @@ namespace GameClient.Controllers
         public new Camera camera;
         public new Camera deathCam;
         bool esc;
+        public static byte myId;
         // Start is called before the first frame update
         void Start()
         {
             rigidbody = GetComponent<Rigidbody>();
-            ps = new PlayerState();
+            ps = new PlayerState(myId);
         }
 
         // Update is called once per frame
@@ -101,7 +102,7 @@ namespace GameClient.Controllers
 
             if (ps.Hp <= 0)
             {
-                
+                deathCam.gameObject.SetActive(true);
             }
         }
     }
