@@ -46,7 +46,7 @@ namespace GameServer.Logic
 
                 Zombies.Add(nextZombie, new ZombieState(100,nextZombie));
 
-                Server.BroadcastData(new ZombieSpawn(nextZombie,1));
+                Server.BroadcastData(new ZombieSpawn(nextZombie,0));
   
                 nextZombie++;
                 timer = 1f;

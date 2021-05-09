@@ -32,6 +32,8 @@ namespace GameClient.Controllers
 
         public void spawnEnemy(ZombieSpawn zombie)
         {
+            Debug.Log("array size: "+spawnPoints.Length);
+            Debug.Log("spawn point: "+zombie.spawnPoint);
             zombies.Add(zombie.id, Instantiate(zombieObject, spawnPoints[zombie.spawnPoint].transform.position, Quaternion.identity));
         }
 
@@ -44,7 +46,6 @@ namespace GameClient.Controllers
                 zombies.TryGetValue(zombie.id, out z);
                 Destroy(z);
             }
-
         }
     }
 }

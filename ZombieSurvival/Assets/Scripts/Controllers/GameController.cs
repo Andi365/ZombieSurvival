@@ -31,13 +31,14 @@ namespace GameClient.Controllers
             IData data;
             if (queue.TryDequeue(out data))
             {
+                Debug.Log("Signature: "+ data.Signature);
                 switch (data.Signature)
                 {
                     case AssignID.Signature:
                         PlayerController.instance.MyID = (data as AssignID).ID;
                         break;
                     case ZombieSpawn.Signature:
-                        ZombieSpawn zom = new ZombieSpawn(data.toBytes());
+                        ZombieSpawn zom = data as ZombieSpawn;
                         SpawnController.instance.spawnEnemy(zom);
                         sc.spawnEnemy(data as ZombieSpawn);
                         break;

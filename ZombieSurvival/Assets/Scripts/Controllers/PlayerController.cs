@@ -128,13 +128,13 @@ namespace GameClient.Controllers
             ps.position.yRot = transform.rotation.eulerAngles.y;
         }
 
-        float sendDataTimer = 0.5f;
+        float sendDataTimer = 0.1f;
         private void Update() {
             sendDataTimer -= Time.deltaTime;
             if (sendDataTimer < 0) 
             {
                 GameController.instance.outgoingQueue.Enqueue(ps);
-                sendDataTimer = 0.5f;
+                sendDataTimer = 0.1f;
             }
         }
 
