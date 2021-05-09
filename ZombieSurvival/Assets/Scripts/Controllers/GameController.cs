@@ -31,7 +31,6 @@ namespace GameClient.Controllers
             IData data;
             if (queue.TryDequeue(out data))
             {
-                Debug.Log(data);
                 switch (data.Signature)
                 {
                     case AssignID.Signature:

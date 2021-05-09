@@ -8,17 +8,21 @@ namespace GameClient.AI
     class FakePlayer : MonoBehaviour
     {
         private PlayerState playerState;
+        private new Rigidbody rigidbody;
 
         // Start is called before the first frame update
         void Start()
         {
-
+            rigidbody = gameObject.GetComponent<Rigidbody>();
         }
 
         // Update is called once per frame
-        void Update()
+        void FixedUpdate()
         {
-
+            Debug.Log("xVel: " + playerState.position.xVel);
+            Debug.Log("yVel: " + playerState.position.yVel);
+            Debug.Log("zVel: " + playerState.position.zVel);
+            rigidbody.velocity = new Vector3(playerState.position.xVel, playerState.position.yVel, playerState.position.zVel);
         }
 
         public void UpdatePlayerState(PlayerState ps) 
@@ -26,7 +30,6 @@ namespace GameClient.AI
             playerState = ps;
             Position psPos = playerState.position;
             transform.position = new Vector3(psPos.x, psPos.y, psPos.z);
-            gameObject.GetComponent<Rigidbody>().velocity = new Vector3(psPos.xVel, psPos.yVel, psPos.zVel);
             transform.rotation = Quaternion.Euler(0, psPos.yRot, 0);
         }
     }
