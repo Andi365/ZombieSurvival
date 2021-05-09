@@ -21,6 +21,7 @@ namespace GameClient.AI
         void FixedUpdate()
         {
             Vector3 v = new Vector3(playerState.position.r, 0, playerState.position.f);
+            v = Quaternion.AngleAxis(playerState.position.yRot, Vector3.up) * v;
             rigidbody.position = Vector3.MoveTowards(rigidbody.position, v.normalized + rigidbody.position, Time.fixedDeltaTime * PlayerController.instance.speed);
         }
 

@@ -14,7 +14,7 @@ namespace GameClient.Controllers
         private new Rigidbody rigidbody;
         private PlayerState ps;
         public new Camera camera;
-        public new Camera deathCam;
+        public Camera deathCam;
         bool esc;
 
         private byte myID;
