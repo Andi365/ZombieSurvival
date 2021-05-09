@@ -115,7 +115,7 @@ namespace GameClient.Controllers
 
             if (Input.GetKey(KeyCode.H))
             {
-                Zombie zom = new Zombie(0, 1);
+                ZombieSpawn zom = new ZombieSpawn(0, 1);
                 SpawnController spawn = new SpawnController();
                 spawn.spawnEnemy(zom);
             }

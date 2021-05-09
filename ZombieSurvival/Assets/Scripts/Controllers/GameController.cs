@@ -36,13 +36,13 @@ namespace GameClient.Controllers
                     case AssignID.Signature:
                         PlayerController.instance.MyID = (data as AssignID).ID;
                         break;
-                    case Zombie.Signature:
-                        Zombie zom = new Zombie(data.toBytes());
+                    case ZombieSpawn.Signature:
+                        ZombieSpawn zom = new ZombieSpawn(data.toBytes());
                         SpawnController.instance.spawnEnemy(zom);
-                        sc.spawnEnemy(data as Zombie);
+                        sc.spawnEnemy(data as ZombieSpawn);
                         break;
                     case ZombieDead.Signature:
-                        Zombie zom1 = new Zombie(data.toBytes());
+                        ZombieSpawn zom1 = new ZombieSpawn(data.toBytes());
                         SpawnController.instance.killEnemy(zom1);
                         break;
                     case PlayerState.Signature:

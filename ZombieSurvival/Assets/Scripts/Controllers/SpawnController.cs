@@ -30,13 +30,13 @@ namespace GameClient.Controllers
             spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
         }
 
-        public void spawnEnemy(Zombie zombie)
+        public void spawnEnemy(ZombieSpawn zombie)
         {
             zombies.Add(zombie.id, Instantiate(zombieObject, spawnPoints[zombie.spawnPoint].transform.position, Quaternion.identity));
         }
 
 
-        public void killEnemy(Zombie zombie)
+        public void killEnemy(ZombieSpawn zombie)
         {
             if (zombies.ContainsKey(zombie.id))
             {
