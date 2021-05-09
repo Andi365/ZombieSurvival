@@ -20,8 +20,7 @@ namespace GameClient.AI
         // Update is called once per frame
         void FixedUpdate()
         {
-            Vector3 v = new Vector3(playerState.position.r, 0, playerState.position.f);
-            v = Quaternion.AngleAxis(playerState.position.yRot, Vector3.up) * v;
+            Vector3 v = new Vector3(playerState.position.xMov, 0, playerState.position.zMov);
             rigidbody.position = Vector3.MoveTowards(rigidbody.position, v.normalized + rigidbody.position, Time.fixedDeltaTime * PlayerController.instance.speed);
         }
 

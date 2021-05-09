@@ -73,8 +73,8 @@ namespace GameClient.Controllers
             Vector3 v = new Vector3(r, 0, f);
             v = Quaternion.AngleAxis(camera.transform.rotation.eulerAngles.y, Vector3.up) * v;
             rigidbody.position = Vector3.MoveTowards(rigidbody.position, v.normalized + rigidbody.position, Time.fixedDeltaTime * speed);
-            ps.position.f = (int)f;
-            ps.position.r = (int)r;
+            ps.position.xMov = v.normalized.x;
+            ps.position.zMov = v.normalized.z;
 
             f = 0;
             r = 0;
