@@ -73,6 +73,8 @@ namespace GameClient.Controllers
             Vector3 v = new Vector3(r, 0, f);
             v = Quaternion.AngleAxis(camera.transform.rotation.eulerAngles.y, Vector3.up) * v;
             rigidbody.position = Vector3.MoveTowards(rigidbody.position, v.normalized + rigidbody.position, Time.fixedDeltaTime * speed);
+            ps.position.f = (int)f;
+            ps.position.r = (int)r;
 
             f = 0;
             r = 0;
@@ -124,9 +126,6 @@ namespace GameClient.Controllers
             ps.position.y = transform.position.y;
             ps.position.z = transform.position.z;
             ps.position.yRot = transform.rotation.eulerAngles.y;
-            ps.position.xVel = rigidbody.velocity.x;
-            ps.position.yVel = rigidbody.velocity.y;
-            ps.position.zVel = rigidbody.velocity.z;
         }
 
         float sendDataTimer = 0.5f;

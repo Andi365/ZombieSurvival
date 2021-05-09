@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Data;
+using GameClient.Controllers;
 
 namespace GameClient.AI
 {
@@ -19,10 +20,8 @@ namespace GameClient.AI
         // Update is called once per frame
         void FixedUpdate()
         {
-            Debug.Log("xVel: " + playerState.position.xVel);
-            Debug.Log("yVel: " + playerState.position.yVel);
-            Debug.Log("zVel: " + playerState.position.zVel);
-            rigidbody.velocity = new Vector3(playerState.position.xVel, playerState.position.yVel, playerState.position.zVel);
+            Vector3 v = new Vector3(playerState.position.r, 0, playerState.position.f);
+            rigidbody.position = Vector3.MoveTowards(rigidbody.position, v.normalized + rigidbody.position, Time.fixedDeltaTime * PlayerController.instance.speed);
         }
 
         public void UpdatePlayerState(PlayerState ps) 
