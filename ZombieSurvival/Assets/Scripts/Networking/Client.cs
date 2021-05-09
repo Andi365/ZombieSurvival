@@ -38,7 +38,7 @@ class Client : MonoBehaviour
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F))
-            SendData(new Position(1, 2, 3, 0));
+            SendData(new Position(1, 2, 3, 0, 0, 0, 0));
         if (Input.GetKeyDown(KeyCode.P))
             SendData(new PlayerState(PlayerController.instance.MyID));
         if (Input.GetKeyDown(KeyCode.Q))
