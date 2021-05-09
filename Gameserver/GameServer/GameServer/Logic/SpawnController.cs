@@ -43,14 +43,13 @@ namespace GameServer.Logic
 
             if(timer < 0 && Zombies.Count < 20)
             {
-   
+
                 Zombies.Add(nextZombie, new ZombieState(100,nextZombie));
-                Server.BroadcastData(Zombies[nextZombie]);
+
+                Server.BroadcastData(new ZombieSpawn(nextZombie,1));
   
                 nextZombie++;
-
                 timer = 1f;
-
             }
         }
 
