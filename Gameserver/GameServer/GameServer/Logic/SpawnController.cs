@@ -23,9 +23,11 @@ namespace GameServer.Logic
         private SpawnController()
         {
             Zombies = new Dictionary<byte, ZombieState>();
+            nextZombie = 0;
         }
 
         float timer = 1f;
+        byte nextZombie;
         private Dictionary<byte, ZombieState> Zombies;
 
         public void Init()
@@ -41,21 +43,20 @@ namespace GameServer.Logic
 
             if(timer < 0 && Zombies.Count < 20)
             {
-
+   
+                Zombies.Add(nextZombie, new ZombieState(100,nextZombie));
+                Server.BroadcastData(Zombies[nextZombie]);
+  
+                nextZombie++;
 
                 timer = 1f;
-                //ZombieSpawn spawn = new ZombieSpawn();
-                //Server.BroadcastData(ZombieSpawn);
 
             }
-
         }
 
         public void End()
         {
 
         }
-
-   
     }
 }
