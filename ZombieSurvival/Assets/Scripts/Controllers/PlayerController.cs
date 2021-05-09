@@ -119,18 +119,23 @@ namespace GameClient.Controllers
                 SpawnController spawn = new SpawnController();
                 spawn.spawnEnemy(zom);
             }
+
             ps.position.x = transform.position.x;
             ps.position.y = transform.position.y;
             ps.position.z = transform.position.z;
+            ps.position.yRot = transform.rotation.eulerAngles.y;
+            ps.position.xVel = rigidbody.velocity.x;
+            ps.position.yVel = rigidbody.velocity.y;
+            ps.position.zVel = rigidbody.velocity.z;
         }
 
-        float sendDataTimer = 1f;
+        float sendDataTimer = 0.5f;
         private void Update() {
             sendDataTimer -= Time.deltaTime;
             if (sendDataTimer < 0) 
             {
                 GameController.instance.outgoingQueue.Enqueue(ps);
-                sendDataTimer = 1f;
+                sendDataTimer = 0.5f;
             }
         }
 
