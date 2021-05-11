@@ -14,7 +14,7 @@ namespace GameClient.Controllers
         private new Rigidbody rigidbody;
         private PlayerState ps;
         public new Camera camera;
-        public new Camera deathCam;
+        public Camera deathCam;
         bool esc;
 
         private byte myID;
@@ -73,8 +73,8 @@ namespace GameClient.Controllers
             Vector3 v = new Vector3(r, 0, f);
             v = Quaternion.AngleAxis(camera.transform.rotation.eulerAngles.y, Vector3.up) * v;
             rigidbody.position = Vector3.MoveTowards(rigidbody.position, v.normalized + rigidbody.position, Time.fixedDeltaTime * speed);
-            ps.position.f = (int)f;
-            ps.position.r = (int)r;
+            ps.position.xMov = v.normalized.x;
+            ps.position.zMov = v.normalized.z;
 
             f = 0;
             r = 0;
@@ -128,13 +128,13 @@ namespace GameClient.Controllers
             ps.position.yRot = transform.rotation.eulerAngles.y;
         }
 
-        float sendDataTimer = 0.5f;
+        float sendDataTimer = 0.1f;
         private void Update() {
             sendDataTimer -= Time.deltaTime;
             if (sendDataTimer < 0) 
             {
                 GameController.instance.outgoingQueue.Enqueue(ps);
-                sendDataTimer = 0.5f;
+                sendDataTimer = 0.1f;
             }
         }
 
