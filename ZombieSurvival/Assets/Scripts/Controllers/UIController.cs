@@ -16,7 +16,7 @@ namespace GameClient.Controllers
         public InputField UsernameField;
         public InputField PortField;
         public InputField IPField;
-        public Text UsernameError, PortError, IPError;
+        public Text UsernameError, PortError, IPError, PlayersReadyError;
         public LobbyListView listView;
         private Dictionary<byte, (string, bool)> playersReady;
 
@@ -131,6 +131,8 @@ namespace GameClient.Controllers
         {
             if (allReady())
                 GameController.instance.outgoingQueue.Enqueue(new StartServer());
+            else
+                PlayersReadyError.text = "All players must be ready";
         }
     }
 }

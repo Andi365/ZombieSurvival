@@ -84,7 +84,7 @@ namespace GameServer.Logic
             LC.Players().CopyTo(players, 0);
             foreach (PlayerReady player in players)
             {
-                Thread.Sleep(5);
+                Thread.Sleep(100);
                 Server.SendData(id, player);
             }
         }
