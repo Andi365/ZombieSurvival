@@ -86,7 +86,7 @@ namespace GameServer.Networking
                     if(socket.Connected)
                     {
                         byte[] _packet = _data.toBytes();
-                        stream.Write(_packet, 0, _data.SizeOf());
+                        stream.BeginWrite(_packet, 0, _data.SizeOf(), new AsyncCallback(n => stream.EndWrite(n)), null);
                     }
                 }
                 catch

@@ -40,5 +40,10 @@ namespace Data
             stringBytes.CopyTo(bytes, 3);
             return bytes;
         }
+
+        public override string ToString() 
+        {
+            return $"Name = {name}; ID = {ID}";
+        }
     }
 }

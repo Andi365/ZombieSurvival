@@ -4,6 +4,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 using GameServer.Networking;
+using System.Threading;
 
 namespace GameServer.Logic
 {
@@ -57,11 +58,14 @@ namespace GameServer.Logic
                     break;
                 case DisconnectClient.Signature:
                     Console.WriteLine("Client Disconnected");
+                    if (!run)
+                        Server.BroadcastData(data.Item2);
                     break;
                 case StopServer.Signature:
                     run = false;
                     break;
                 case PlayerReady.Signature:
+                    LC.HandlePlayerReady(data.Item2 as PlayerReady);
                     Server.BroadcastData(data.Item2);
                     break;
                 default:
@@ -71,8 +75,11 @@ namespace GameServer.Logic
 
         public void OnClientConnected(byte id)
         {
-            foreach (PlayerReady player in LC.Players())
+            PlayerReady[] players = new PlayerReady[LC.Players().Count];
+            LC.Players().CopyTo(players, 0);
+            foreach (PlayerReady player in players)
             {
+                Thread.Sleep(5);
                 Server.SendData(id, player);
             }
         }

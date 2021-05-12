@@ -107,7 +107,7 @@ class Client : MonoBehaviour
             try
             {
                 stream = socket.GetStream();
-                stream.Write(data, 0, size);
+                stream.BeginWrite(data, 0, size, new AsyncCallback(n => stream.EndWrite(n)), null);
             }
             catch (Exception)
             {

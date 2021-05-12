@@ -46,13 +46,12 @@ namespace GameServer.Networking
 
             byte newClientID = availableIDs.Dequeue();
             Client newClient = new Client(newClientID);
-            clients.Add(newClientID, newClient);
             newClient.tcp.Connect(_client);
+            clients.Add(newClientID, newClient);
             newClient.tcp.SendData(new AssignID(newClientID));
 
-            GameServer.Logic.LogicController.Instance.OnClientConnected(newClientID);
-
             Console.WriteLine($"Inbound connection from {_client.Client.RemoteEndPoint}, connected as id {newClientID}");
+            Logic.LogicController.Instance.OnClientConnected(newClientID);
         }
 
         private static void InitializeZombieSpawn()
