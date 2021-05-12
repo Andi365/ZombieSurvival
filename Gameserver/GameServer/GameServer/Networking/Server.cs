@@ -50,6 +50,8 @@ namespace GameServer.Networking
             newClient.tcp.Connect(_client);
             newClient.tcp.SendData(new AssignID(newClientID));
 
+            GameServer.Logic.LogicController.Instance.OnClientConnected(newClientID);
+
             Console.WriteLine($"Inbound connection from {_client.Client.RemoteEndPoint}, connected as id {newClientID}");
         }
 

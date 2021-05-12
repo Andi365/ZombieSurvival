@@ -7,6 +7,7 @@ namespace GameClient.Controllers
 {
     class PlayerController : MonoBehaviour
     {
+        public static string PlayerName;
         public float speed = 2f;
         public float jumpVel = 4f;
         public float onGroundDist = 1.01f;
@@ -17,14 +18,13 @@ namespace GameClient.Controllers
         public Camera deathCam;
         bool esc;
 
-        private byte myID;
-        public byte MyID
+        private static byte myID = 0xFF;
+        public static byte MyID
         { 
             get { return myID; }
             set 
             { 
                 myID = value; 
-                ps.playerId = myID;
             } 
         }
         public static PlayerController instance;
@@ -115,13 +115,6 @@ namespace GameClient.Controllers
                 }
             }
 
-            if (Input.GetKey(KeyCode.H))
-            {
-                ZombieSpawn zom = new ZombieSpawn(0, 1);
-                SpawnController spawn = new SpawnController();
-                spawn.spawnEnemy(zom);
-            }
-
             ps.position.x = transform.position.x;
             ps.position.y = transform.position.y;
             ps.position.z = transform.position.z;
@@ -129,9 +122,10 @@ namespace GameClient.Controllers
         }
 
         float sendDataTimer = 0.1f;
-        private void Update() {
+        private void Update()
+        {
             sendDataTimer -= Time.deltaTime;
-            if (sendDataTimer < 0) 
+            if (sendDataTimer < 0)
             {
                 GameController.instance.outgoingQueue.Enqueue(ps);
                 sendDataTimer = 0.1f;
@@ -141,7 +135,7 @@ namespace GameClient.Controllers
         public void updateHP(int healthChange)
         {
             ps.Hp = ps.Hp + healthChange;
-            
+
             if (ps.Hp <= 0)
             {
                 camera.gameObject.SetActive(false);

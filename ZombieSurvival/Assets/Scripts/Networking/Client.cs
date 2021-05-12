@@ -37,17 +37,16 @@ class Client : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
-            SendData(new Position(1, 2, 3, 0, 0, 0, 0));
-        if (Input.GetKeyDown(KeyCode.P))
-            SendData(new PlayerState(PlayerController.instance.MyID));
         if (Input.GetKeyDown(KeyCode.Q))
             SendData(new StopServer());
 
-        IData data;
-        if (GameController.instance.outgoingQueue.TryDequeue(out data)) 
+        if (tcp.connected)
         {
-            SendData(data);
+            IData data;
+            if (GameController.instance.outgoingQueue.TryDequeue(out data))
+            {
+                SendData(data);
+            }
         }
 
     }
@@ -67,6 +66,7 @@ class Client : MonoBehaviour
         public TcpClient socket;
         private NetworkStream stream;
         private byte[] receiveBuffer;
+        public bool connected = false;
         public void Connect()
         {
             socket = new TcpClient
@@ -82,6 +82,7 @@ class Client : MonoBehaviour
         {
             TcpClient socket = (TcpClient)_result.AsyncState;
             socket.EndConnect(_result);
+            connected = true;
             if (!socket.Connected)
                 return;
             stream = socket.GetStream();

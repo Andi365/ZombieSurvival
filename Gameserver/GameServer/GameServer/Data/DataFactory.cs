@@ -12,8 +12,10 @@ namespace Data
             { ZombieSpawn.Signature, n => new ZombieSpawn(n) },
             { ZombieDead.Signature, n => new ZombieDead(n) },
             { DisconnectClient.Signature, n => new DisconnectClient(n) },
+            { PlayerReady.Signature, n => new PlayerReady(n) },
             { StopServer.Signature, n => new StopServer(n) },
-            { AssignID.Signature, n => new AssignID(n) }
+            { AssignID.Signature, n => new AssignID(n) },
+            { ZombieHit.Signature, n => new ZombieHit(n) }
         };
 
         public static IData BytesToData(byte[] bytes)

@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using GameClient.Controllers;
+using Data;
 
 namespace GameClient.AI
 {
     public class RaycastShoot : MonoBehaviour
     {
         //Damage done by weapon
-        public int gunDamage = 1;
+        public int gunDamage = 25;
         // Delay on when you can shoot again
         public float fireRate = .25f;
         // how far the ray will be shot
@@ -41,7 +42,6 @@ namespace GameClient.AI
             Vector3 rayOrigin = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
             if (Input.GetButtonDown("Fire1") && Time.time > nextFire)
             {
-                Debug.Log("Key pressed");
                 // make sure we cant shoot before time have exceeded.  
                 nextFire = Time.time + fireRate;
                 StartCoroutine(ShotEffect());
@@ -56,6 +56,13 @@ namespace GameClient.AI
                 {
                     //set this hit position to our second point in space
                     gunLine.SetPosition(1, hit.point);
+
+                    NPCScript zombie = hit.collider.GetComponent<NPCScript>();
+
+                    if (zombie != null)
+                    {
+                        GameController.instance.outgoingQueue.Enqueue(new ZombieHit(zombie.zombie.Id, gunDamage));
+                    }
                 }
                 else
                 {

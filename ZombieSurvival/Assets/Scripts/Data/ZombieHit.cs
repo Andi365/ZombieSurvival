@@ -1,37 +1,37 @@
-﻿using Data;
+using Data;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Data
 {
-    class ZombieState : IData
+    class ZombieHit : IData
     {
-        public const byte Signature = 0x12;
+        public const byte Signature = 0x13;
         byte IData.Signature => Signature;
         public readonly byte Id;
-        public int hp = 100;
+        public int damage;
 
-        public ZombieState(int _hp, byte _id)
+        public ZombieHit(byte _id, int _damage)
         {
             this.Id = _id;
-            this.hp = _hp;
+            this.damage = _damage;
         }
 
-        public ZombieState(byte[] bytes)
+        public ZombieHit(byte[] bytes)
         {
             this.Id = bytes[1];
-            this.hp = BitConverter.ToInt32(bytes, 2);
+            this.damage = BitConverter.ToInt32(bytes, 2);
         }
 
-        public static int SizeOf => 2+sizeof(int);
+        public static int SizeOf => 2 + sizeof(int);
 
         public byte[] toBytes()
         {
             byte[] bytes = new byte[SizeOf];
             bytes[0] = Signature;
             bytes[1] = Id;
-            BitConverter.GetBytes(hp).CopyTo(bytes, 2);
+            BitConverter.GetBytes(damage).CopyTo(bytes, 2);
             return bytes;
         }
 

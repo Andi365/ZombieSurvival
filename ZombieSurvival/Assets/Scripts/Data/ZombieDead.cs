@@ -6,7 +6,7 @@ namespace Data
     {
         public const byte Signature = 0x11;
         byte IData.Signature => Signature;
-        private readonly byte id;
+        public readonly byte id;
 
         public ZombieDead(byte id)
         {
@@ -15,7 +15,7 @@ namespace Data
 
         public ZombieDead(byte[] bytes)
         {
-            this.id = bytes[0];
+            this.id = bytes[1];
         }
 
         public static int SizeOf => 2;
