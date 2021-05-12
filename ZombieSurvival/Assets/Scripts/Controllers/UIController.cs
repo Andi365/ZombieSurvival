@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using System;
 using System.Text.RegularExpressions;
 using GameClient.UI;
@@ -103,6 +102,8 @@ namespace GameClient.Controllers
         public void RemovePlayer(byte ID) 
         {
             listView.RemovePlayer(ID);
+            if (playersReady.ContainsKey(ID))
+                playersReady.Remove(ID);
         }
 
         public void toggleReady(Text readyButtonText) 
@@ -118,9 +119,18 @@ namespace GameClient.Controllers
             }
         }
 
+        private bool allReady() 
+        {
+            foreach ((string, bool) playerReady in playersReady.Values)
+                if (!playerReady.Item2)
+                    return false;
+            return true;
+        }
+
         public void StartGame() 
         {
-            SceneManager.LoadScene(1, LoadSceneMode.Single);
+            if (allReady())
+                GameController.instance.outgoingQueue.Enqueue(new StartServer());
         }
     }
 }

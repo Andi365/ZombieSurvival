@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Concurrent;
 using UnityEngine;
 using Data;
+using UnityEngine.SceneManagement;
 
 namespace GameClient.Controllers
 {
@@ -61,6 +62,10 @@ namespace GameClient.Controllers
                         {
                             UIController.instance.RemovePlayer((data as DisconnectClient).ClientID);
                         }
+                        break;
+                    case StartServer.Signature:
+                        GameActive = true;
+                        SceneManager.LoadScene(1, LoadSceneMode.Single);
                         break;
                     default:
                         break;

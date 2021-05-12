@@ -71,6 +71,10 @@ namespace GameServer.Logic
                     LC.HandlePlayerReady(data.Item2 as PlayerReady);
                     Server.BroadcastData(data.Item2);
                     break;
+                case StartServer.Signature:
+                    if (LC.Ready())
+                        Server.BroadcastData(data.Item2);
+                    break;
                 default:
                     break;
             }
