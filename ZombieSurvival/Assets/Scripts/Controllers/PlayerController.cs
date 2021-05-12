@@ -7,6 +7,7 @@ namespace GameClient.Controllers
 {
     class PlayerController : MonoBehaviour
     {
+        public static string PlayerName;
         public float speed = 2f;
         public float jumpVel = 4f;
         public float onGroundDist = 1.01f;
@@ -17,14 +18,13 @@ namespace GameClient.Controllers
         public Camera deathCam;
         bool esc;
 
-        private byte myID;
-        public byte MyID
+        private static byte myID = 0xFF;
+        public static byte MyID
         { 
             get { return myID; }
             set 
             { 
                 myID = value; 
-                ps.playerId = myID;
             } 
         }
         public static PlayerController instance;
