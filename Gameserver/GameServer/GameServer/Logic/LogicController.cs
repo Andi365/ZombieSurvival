@@ -71,6 +71,10 @@ namespace GameServer.Logic
                         Console.WriteLine($"{data.Item2 as PlayerState} sent by {data.Item1}");
                         Server.BroadcastData(data.Item2);
                         break;
+                    case ZombieHit.Signature:
+                        Console.WriteLine($"{data.Item2 as ZombieHit} sent by {data.Item1}");
+                        SC.DamageZombie(data.Item2 as ZombieHit);
+                        break;
                     case DisconnectClient.Signature:
                         Console.WriteLine("Client Disconnected");
                         break;
