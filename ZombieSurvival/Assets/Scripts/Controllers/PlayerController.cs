@@ -19,13 +19,13 @@ namespace GameClient.Controllers
 
         private byte myID;
         public byte MyID
-        { 
+        {
             get { return myID; }
-            set 
-            { 
-                myID = value; 
+            set
+            {
+                myID = value;
                 ps.playerId = myID;
-            } 
+            }
         }
         public static PlayerController instance;
 
@@ -115,13 +115,6 @@ namespace GameClient.Controllers
                 }
             }
 
-            if (Input.GetKey(KeyCode.H))
-            {
-                ZombieSpawn zom = new ZombieSpawn(0, 1);
-                SpawnController spawn = new SpawnController();
-                spawn.spawnEnemy(zom);
-            }
-
             ps.position.x = transform.position.x;
             ps.position.y = transform.position.y;
             ps.position.z = transform.position.z;
@@ -129,9 +122,10 @@ namespace GameClient.Controllers
         }
 
         float sendDataTimer = 0.1f;
-        private void Update() {
+        private void Update()
+        {
             sendDataTimer -= Time.deltaTime;
-            if (sendDataTimer < 0) 
+            if (sendDataTimer < 0)
             {
                 GameController.instance.outgoingQueue.Enqueue(ps);
                 sendDataTimer = 0.1f;
@@ -141,7 +135,7 @@ namespace GameClient.Controllers
         public void updateHP(int healthChange)
         {
             ps.Hp = ps.Hp + healthChange;
-            
+
             if (ps.Hp <= 0)
             {
                 camera.gameObject.SetActive(false);
