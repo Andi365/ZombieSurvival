@@ -33,15 +33,13 @@ namespace GameClient.Controllers
 
         public void spawnEnemy(ZombieSpawn _zombieSpawn)
         {
-            Debug.Log("array size: " + spawnPoints.Length);
-            Debug.Log("spawn point: " + _zombieSpawn.spawnPoint);
             GameObject zombie = Instantiate(zombieObject, spawnPoints[_zombieSpawn.spawnPoint].transform.position, Quaternion.identity);
             zombies.Add(_zombieSpawn.id, zombie);
             zombie.GetComponent<NPCScript>().setId(_zombieSpawn.id);
         }
 
 
-        public void killEnemy(ZombieSpawn zombie)
+        public void killEnemy(ZombieDead zombie)
         {
             if (zombies.ContainsKey(zombie.id))
             {

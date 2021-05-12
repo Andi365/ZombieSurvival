@@ -30,7 +30,6 @@ namespace GameClient.Controllers
             IData data;
             if (queue.TryDequeue(out data))
             {
-                Debug.Log("Signature: " + data.Signature);
                 switch (data.Signature)
                 {
                     case AssignID.Signature:
@@ -40,7 +39,7 @@ namespace GameClient.Controllers
                         sc.spawnEnemy(data as ZombieSpawn);
                         break;
                     case ZombieDead.Signature:
-                        sc.killEnemy(data as ZombieSpawn);
+                        sc.killEnemy(data as ZombieDead);
                         break;
                     case PlayerState.Signature:
                         PlayerState ps = data as PlayerState;

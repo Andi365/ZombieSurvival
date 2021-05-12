@@ -19,7 +19,6 @@ namespace GameClient.AI
         // Start is called before the first frame update
         void Start()
         {
-            Debug.Log("hello world");
             trans = GetComponent<Transform>();
             player = GameObject.FindGameObjectsWithTag("Player")[0];
         }
@@ -42,7 +41,6 @@ namespace GameClient.AI
 
                     if (atkTimer < 0)
                     {
-                        Debug.Log("i atked");
 
                         PlayerController.instance.updateHP(-10);
                         atkTimer = 1;
