@@ -15,7 +15,7 @@ namespace Data
 
         public ZombieDead(byte[] bytes)
         {
-            this.id = bytes[0];
+            this.id = bytes[1];
         }
 
         public static int SizeOf => 2;

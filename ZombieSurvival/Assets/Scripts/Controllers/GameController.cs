@@ -25,13 +25,11 @@ namespace GameClient.Controllers
                 Destroy(this);
             }
         }
-
         private void Update()
         {
             IData data;
             if (queue.TryDequeue(out data))
             {
-                Debug.Log("Signature: "+ data.Signature);
                 switch (data.Signature)
                 {
                     case AssignID.Signature:
@@ -39,13 +37,10 @@ namespace GameClient.Controllers
                         UIController.instance.onConnect();
                         break;
                     case ZombieSpawn.Signature:
-                        ZombieSpawn zom = data as ZombieSpawn;
-                        SpawnController.instance.spawnEnemy(zom);
                         sc.spawnEnemy(data as ZombieSpawn);
                         break;
                     case ZombieDead.Signature:
-                        ZombieSpawn zom1 = new ZombieSpawn(data.toBytes());
-                        SpawnController.instance.killEnemy(zom1);
+                        sc.killEnemy(data as ZombieDead);
                         break;
                     case PlayerState.Signature:
                         PlayerState ps = data as PlayerState;

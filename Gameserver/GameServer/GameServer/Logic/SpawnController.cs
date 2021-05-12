@@ -8,6 +8,9 @@ namespace GameServer.Logic
 {
     class SpawnController
     {
+        float timer = 2f;
+        byte nextZombie;
+        private Dictionary<byte, ZombieState> Zombies;
         private static SpawnController instance;
         public static SpawnController Instance
         {
@@ -26,15 +29,7 @@ namespace GameServer.Logic
             nextZombie = 0;
         }
 
-        float timer = 1f;
-        byte nextZombie;
-        private Dictionary<byte, ZombieState> Zombies;
-
-        public void Init()
-        {
-
-
-        }
+        public void Init(){}
 
         public void Update()
         {
@@ -55,7 +50,25 @@ namespace GameServer.Logic
 
         public void End()
         {
+        }
 
+        public void DamageZombie(ZombieHit hit)
+        {
+            ZombieState zom = Zombies[hit.Id];
+
+            if (zom != null)
+            {
+                zom.hp -= hit.damage;
+                if (zom.hp <= 0)
+                {
+                    Server.BroadcastData(new ZombieDead(zom.Id));
+                    Zombies.Remove(zom.Id);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Error: could not find zombie in Dictionary");
+            }
         }
     }
 }

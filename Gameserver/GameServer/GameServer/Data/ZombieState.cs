@@ -9,19 +9,19 @@ namespace Data
     {
         public const byte Signature = 0x12;
         byte IData.Signature => Signature;
-        private readonly byte Id;
-        private int ZombieHp { get; set; } = 100;
+        public readonly byte Id;
+        public int hp = 100;
 
-        public ZombieState(int _ZombieHp, byte _id)
+        public ZombieState(int _hp, byte _id)
         {
             this.Id = _id;
-            this.ZombieHp = _ZombieHp;
+            this.hp = _hp;
         }
 
         public ZombieState(byte[] bytes)
         {
             this.Id = bytes[1];
-            this.ZombieHp = BitConverter.ToInt32(bytes, sizeof(int) + 2);
+            this.hp = BitConverter.ToInt32(bytes, 2);
         }
 
         public static int SizeOf => 2+sizeof(int);
@@ -31,7 +31,7 @@ namespace Data
             byte[] bytes = new byte[SizeOf];
             bytes[0] = Signature;
             bytes[1] = Id;
-            BitConverter.GetBytes(ZombieHp).CopyTo(bytes, sizeof(int) + 2);
+            BitConverter.GetBytes(hp).CopyTo(bytes, 2);
             return bytes;
         }
 
