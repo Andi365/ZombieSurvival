@@ -59,7 +59,10 @@ namespace GameServer.Logic
                 case DisconnectClient.Signature:
                     Console.WriteLine("Client Disconnected");
                     if (!run)
+                    {
+                        LC.RemovePlayer(data.Item1);
                         Server.BroadcastData(data.Item2);
+                    }
                     break;
                 case StopServer.Signature:
                     run = false;

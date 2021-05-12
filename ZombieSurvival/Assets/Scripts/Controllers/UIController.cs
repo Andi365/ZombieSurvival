@@ -100,6 +100,11 @@ namespace GameClient.Controllers
             listView.SetItemText(player.ID, text);
         }
 
+        public void RemovePlayer(byte ID) 
+        {
+            listView.RemovePlayer(ID);
+        }
+
         public void toggleReady(Text readyButtonText) 
         {
             if (readyButtonText.text.Equals("Ready")) 

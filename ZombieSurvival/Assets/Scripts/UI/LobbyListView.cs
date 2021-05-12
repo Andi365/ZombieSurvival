@@ -40,5 +40,13 @@ namespace GameClient.UI
             else
                 AddListItem(ID, text);
         }
+
+        public void RemovePlayer(byte ID)
+        {
+            if (!ListItems.ContainsKey(ID))
+                return;
+            Destroy(ListItems[ID]);
+            ListItems.Remove(ID);
+        }
     }
 }

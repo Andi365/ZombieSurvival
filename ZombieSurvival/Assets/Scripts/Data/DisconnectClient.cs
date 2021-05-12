@@ -7,7 +7,7 @@ namespace Data
         public const byte Signature = 0xFE;
         byte IData.Signature => Signature;
 
-        private byte ClientID;
+        public byte ClientID;
 
         public DisconnectClient(byte id)
         {

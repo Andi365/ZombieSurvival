@@ -7,6 +7,7 @@ namespace GameClient.Controllers
 {
     class GameController : MonoBehaviour
     {
+        public bool GameActive { get; private set; } = false;
         public static GameController instance;
         public SpawnController sc { private get; set; }
         public ConcurrentQueue<IData> queue = new ConcurrentQueue<IData>();
@@ -51,6 +52,15 @@ namespace GameClient.Controllers
                         break;
                     case PlayerReady.Signature:
                         UIController.instance.setPlayerReadiness(data as PlayerReady);
+                        break;
+                    case DisconnectClient.Signature:
+                        if (GameActive) 
+                        {
+
+                        } else 
+                        {
+                            UIController.instance.RemovePlayer((data as DisconnectClient).ClientID);
+                        }
                         break;
                     default:
                         break;
