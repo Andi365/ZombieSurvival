@@ -56,9 +56,9 @@ class Client : MonoBehaviour
         tcp.Send(data.toBytes(), data.SizeOf());
     }
 
-    public void ConnectToServer()
+    public void ConnectToServer(string ip, string port)
     {
-        tcp.Connect();
+        tcp.Connect(ip, port);
     }
 
     class TCP
@@ -67,7 +67,7 @@ class Client : MonoBehaviour
         private NetworkStream stream;
         private byte[] receiveBuffer;
         public bool connected = false;
-        public void Connect()
+        public void Connect(string ip, string port)
         {
             socket = new TcpClient
             {
@@ -75,7 +75,7 @@ class Client : MonoBehaviour
                 SendBufferSize = dataBufferSize
             };
             receiveBuffer = new byte[dataBufferSize];
-            socket.BeginConnect(instance.ip, instance.port, new AsyncCallback(ConnectedCallback), socket);
+            socket.BeginConnect(ip, Int32.Parse(port), new AsyncCallback(ConnectedCallback), socket);
         }
 
         private void ConnectedCallback(IAsyncResult _result)

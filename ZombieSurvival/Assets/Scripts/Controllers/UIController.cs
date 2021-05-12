@@ -46,7 +46,7 @@ namespace GameClient.Controllers
             LobbyMenu.SetActive(true);
             UsernameField.interactable = false;
             PlayerController.PlayerName = UsernameField.text;
-            Client.instance.ConnectToServer();
+            Client.instance.ConnectToServer(IPField.text, PortField.text);
         }
 
         public void onConnect()
