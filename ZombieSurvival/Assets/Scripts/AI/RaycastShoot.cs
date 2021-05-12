@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using GameClient.Controllers;
+using Data;
 
 namespace GameClient.AI
 {
@@ -56,6 +57,14 @@ namespace GameClient.AI
                 {
                     //set this hit position to our second point in space
                     gunLine.SetPosition(1, hit.point);
+
+                    NPCScript zombie = hit.collider.GetComponent<NPCScript>();
+
+                    if (zombie != null)
+                    {
+                        ZombieHit zombieHit = new ZombieHit(zombie.zombie.Id, gunDamage);
+                        GameController.instance.outgoingQueue.Enqueue(zombieHit);
+                    }
                 }
                 else
                 {
