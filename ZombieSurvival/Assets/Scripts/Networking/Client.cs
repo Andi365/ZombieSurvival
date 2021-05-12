@@ -37,15 +37,11 @@ class Client : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
-            SendData(new Position(1, 2, 3, 0, 0, 0, 0));
-        if (Input.GetKeyDown(KeyCode.P))
-            SendData(new PlayerState(PlayerController.instance.MyID));
         if (Input.GetKeyDown(KeyCode.Q))
             SendData(new StopServer());
 
         IData data;
-        if (GameController.instance.outgoingQueue.TryDequeue(out data)) 
+        if (GameController.instance.outgoingQueue.TryDequeue(out data))
         {
             SendData(data);
         }
