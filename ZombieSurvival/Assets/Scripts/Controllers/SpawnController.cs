@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Data;
+using GameClient.AI;
 
 namespace GameClient.Controllers
 {
@@ -30,11 +31,13 @@ namespace GameClient.Controllers
             spawnPoints = GameObject.FindGameObjectsWithTag("SpawnPoint");
         }
 
-        public void spawnEnemy(ZombieSpawn zombie)
+        public void spawnEnemy(ZombieSpawn _zombieSpawn)
         {
-            Debug.Log("array size: "+spawnPoints.Length);
-            Debug.Log("spawn point: "+zombie.spawnPoint);
-            zombies.Add(zombie.id, Instantiate(zombieObject, spawnPoints[zombie.spawnPoint].transform.position, Quaternion.identity));
+            Debug.Log("array size: " + spawnPoints.Length);
+            Debug.Log("spawn point: " + _zombieSpawn.spawnPoint);
+            GameObject zombie = Instantiate(zombieObject, spawnPoints[_zombieSpawn.spawnPoint].transform.position, Quaternion.identity);
+            zombies.Add(_zombieSpawn.id, zombie);
+            zombie.GetComponent<NPCScript>().setId(_zombieSpawn.id);
         }
 
 

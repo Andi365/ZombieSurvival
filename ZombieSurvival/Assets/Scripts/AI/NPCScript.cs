@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using GameClient.Controllers;
+using Data;
 
 namespace GameClient.AI
 {
-    public class NPCScript : MonoBehaviour
+    class NPCScript : MonoBehaviour
     {
         private Transform trans;
         public NavMeshAgent agent;
         public GameObject player;
+        public ZombieState zombie;
 
         private float atkTimer = 0;
 
@@ -47,6 +49,16 @@ namespace GameClient.AI
                     }
                 }
             }
+        }
+
+        public void Damage(ZombieHit _zombie)
+        {
+            GameController.instance.outgoingQueue.Enqueue(_zombie);
+        }
+
+        public void setId(byte _id)
+        {
+            zombie = new ZombieState(100, _id);
         }
     }
 }
