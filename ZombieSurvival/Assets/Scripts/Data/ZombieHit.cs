@@ -21,7 +21,7 @@ namespace Data
         public ZombieHit(byte[] bytes)
         {
             this.Id = bytes[1];
-            this.damage = BitConverter.ToInt32(bytes, sizeof(int) + 2);
+            this.damage = BitConverter.ToInt32(bytes, 2);
         }
 
         public static int SizeOf => 2 + sizeof(int);
@@ -31,7 +31,7 @@ namespace Data
             byte[] bytes = new byte[SizeOf];
             bytes[0] = Signature;
             bytes[1] = Id;
-            BitConverter.GetBytes(damage).CopyTo(bytes, sizeof(int) + 2);
+            BitConverter.GetBytes(damage).CopyTo(bytes, 2);
             return bytes;
         }
 
