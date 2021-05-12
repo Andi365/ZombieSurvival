@@ -4,44 +4,47 @@ using UnityEngine;
 using UnityEngine.AI;
 using GameClient.Controllers;
 
-public class NPCScript : MonoBehaviour
+namespace GameClient.AI
 {
-    private Transform trans;
-    public NavMeshAgent agent;
-    public GameObject player;
-
-    private float atkTimer = 0;
-
-    // Start is called before the first frame update
-    void Start()
+    public class NPCScript : MonoBehaviour
     {
-        Debug.Log("hello world");
-        trans = GetComponent<Transform>();
-        player = GameObject.FindGameObjectsWithTag("Player")[0];
-    }
+        private Transform trans;
+        public NavMeshAgent agent;
+        public GameObject player;
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        if (player != null)
-          agent.SetDestination(player.transform.position);
-    }
+        private float atkTimer = 0;
 
-    private void Update()
-    {
-        atkTimer -= Time.deltaTime;
-
-        if (player != null)
+        // Start is called before the first frame update
+        void Start()
         {
-            if (Vector3.Distance(player.transform.position, trans.transform.position) <= 2)
+            Debug.Log("hello world");
+            trans = GetComponent<Transform>();
+            player = GameObject.FindGameObjectsWithTag("Player")[0];
+        }
+
+        // Update is called once per frame
+        void FixedUpdate()
+        {
+            if (player != null)
+                agent.SetDestination(player.transform.position);
+        }
+
+        private void Update()
+        {
+            atkTimer -= Time.deltaTime;
+
+            if (player != null)
             {
-
-                if(atkTimer < 0)
+                if (Vector3.Distance(player.transform.position, trans.transform.position) <= 2)
                 {
-                    Debug.Log("i atked");
 
-                    PlayerController.instance.updateHP(-10);
-                    atkTimer = 1;
+                    if (atkTimer < 0)
+                    {
+                        Debug.Log("i atked");
+
+                        PlayerController.instance.updateHP(-10);
+                        atkTimer = 1;
+                    }
                 }
             }
         }
