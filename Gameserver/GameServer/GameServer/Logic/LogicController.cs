@@ -59,8 +59,8 @@ namespace GameServer.Logic
                     if (!run)
                     {
                         LC.RemovePlayer(data.Item1);
-                        Server.BroadcastData(data.Item2);
                     }
+                    Server.BroadcastData(data.Item2);
                     break;
                 case StopServer.Signature:
                     run = false;
@@ -71,7 +71,10 @@ namespace GameServer.Logic
                     break;
                 case StartServer.Signature:
                     if (LC.Ready())
+                    {
+                        run = true;
                         Server.BroadcastData(data.Item2);
+                    }
                     break;
                 default:
                     break;
