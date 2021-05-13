@@ -12,7 +12,8 @@ namespace GameClient.Controllers
         public static FakePlayerController instance;
         public static byte clientID { private get; set; }
         public GameObject FakePlayerPrefab;
-        private Dictionary<byte, FakePlayer> fakePlayers;
+        private Dictionary<byte, GameObject> FakePlayerGOs;
+        private Dictionary<byte, FakePlayer> FakePlayerScripts;
         private void Awake()
         {
             if (instance == null)
@@ -28,7 +29,7 @@ namespace GameClient.Controllers
         // Start is called before the first frame update
         void Start()
         {
-            fakePlayers = new Dictionary<byte, FakePlayer>();
+            FakePlayerScripts = new Dictionary<byte, FakePlayer>();
         }
 
         // Update is called once per frame
@@ -39,9 +40,9 @@ namespace GameClient.Controllers
 
         public void handlePlayer(PlayerState ps) 
         {
-            if (fakePlayers.ContainsKey(ps.playerId)) 
+            if (FakePlayerScripts.ContainsKey(ps.playerId)) 
             {
-                fakePlayers[ps.playerId].UpdatePlayerState(ps);
+                FakePlayerScripts[ps.playerId].UpdatePlayerState(ps);
             } else
             {
                 AddFakePlayer(ps);
@@ -53,7 +54,18 @@ namespace GameClient.Controllers
             Position pos = ps.position;
             Vector3 vPos = new Vector3(pos.x, pos.y, pos.z);
             GameObject fakePlayer = Instantiate(FakePlayerPrefab, vPos, Quaternion.Euler(0, pos.yRot, 0));
-            fakePlayers.Add(ps.playerId, fakePlayer.GetComponent<FakePlayer>());
+            FakePlayerGOs.Add(ps.playerId, fakePlayer);
+            FakePlayerScripts.Add(ps.playerId, fakePlayer.GetComponent<FakePlayer>());
+        }
+
+        public void DisconnectFakePlayer(byte ID)
+        {
+            if (FakePlayerGOs.ContainsKey(ID))
+            {
+                GameObject fakePlayer = FakePlayerGOs[ID];
+                FakePlayerGOs.Remove(ID);
+                Destroy(fakePlayer);
+            }
         }
     }
 }

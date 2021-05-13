@@ -55,12 +55,13 @@ namespace GameClient.Controllers
                         UIController.instance.setPlayerReadiness(data as PlayerReady);
                         break;
                     case DisconnectClient.Signature:
+                        DisconnectClient dc = data as DisconnectClient;
                         if (GameActive) 
                         {
-
+                            FakePlayerController.instance.DisconnectFakePlayer(dc.ClientID);
                         } else 
                         {
-                            UIController.instance.RemovePlayer((data as DisconnectClient).ClientID);
+                            UIController.instance.RemovePlayer(dc.ClientID);
                         }
                         break;
                     case StartServer.Signature:
