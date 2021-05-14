@@ -6,6 +6,7 @@ using System;
 using System.Text.RegularExpressions;
 using GameClient.UI;
 using Data;
+using UnityEngine.SceneManagement;
 
 namespace GameClient.Controllers
 {
@@ -133,6 +134,11 @@ namespace GameClient.Controllers
                 GameController.instance.outgoingQueue.Enqueue(new StartServer());
             else
                 PlayersReadyError.text = "All players must be ready";
+        }
+
+        public void ForceStartGame() 
+        {
+            SceneManager.LoadScene(1, LoadSceneMode.Single);
         }
     }
 }
