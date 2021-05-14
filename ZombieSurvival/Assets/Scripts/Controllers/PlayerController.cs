@@ -20,12 +20,12 @@ namespace GameClient.Controllers
 
         private static byte myID = 0xFF;
         public static byte MyID
-        { 
+        {
             get { return myID; }
-            set 
-            { 
-                myID = value; 
-            } 
+            set
+            {
+                myID = value;
+            }
         }
         public static PlayerController instance;
 
@@ -140,6 +140,7 @@ namespace GameClient.Controllers
             {
                 camera.gameObject.SetActive(false);
                 deathCam.gameObject.SetActive(true);
+                GameController.instance.outgoingQueue.Enqueue(new PlayerDead(ps.playerId));
                 Destroy(gameObject);
             }
         }

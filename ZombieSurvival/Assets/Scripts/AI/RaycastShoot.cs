@@ -11,7 +11,7 @@ namespace GameClient.AI
         //Damage done by weapon
         public int gunDamage = 25;
         // Delay on when you can shoot again
-        public float fireRate = .25f;
+        public float fireRate = 0.25f;
         // how far the ray will be shot
         public float weaponRange = 50f;
         // If a raycast intersect an object with a rigidbody component it will be applied force.
@@ -40,7 +40,7 @@ namespace GameClient.AI
         void Update()
         {
             Vector3 rayOrigin = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
-            if (Input.GetButtonDown("Fire1") && Time.time > nextFire)
+            if (Input.GetKey(KeyCode.Mouse0) && Time.time > nextFire)
             {
                 // make sure we cant shoot before time have exceeded.  
                 nextFire = Time.time + fireRate;
@@ -70,7 +70,6 @@ namespace GameClient.AI
                     gunLine.SetPosition(1, rayOrigin + (fpsCam.transform.forward * weaponRange));
 
                 }
-
             }
 
             //Draws a line so we can see the line we shoot in for debugging

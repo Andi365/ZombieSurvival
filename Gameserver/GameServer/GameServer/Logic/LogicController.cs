@@ -51,6 +51,9 @@ namespace GameServer.Logic
                 case PlayerState.Signature:
                     Server.BroadcastData(data.Item2);
                     break;
+                case PlayerDead.Signature:
+                    Server.BroadcastData(data.Item2);
+                    break;
                 case ZombieHit.Signature:
                     SC.DamageZombie(data.Item2 as ZombieHit);
                     break;

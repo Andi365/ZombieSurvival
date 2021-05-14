@@ -16,7 +16,8 @@ namespace Data
             { StopServer.Signature, n => new StopServer(n) },
             { AssignID.Signature, n => new AssignID(n) },
             { ZombieHit.Signature, n => new ZombieHit(n) },
-            { StartServer.Signature, n => new StartServer(n) }
+            { StartServer.Signature, n => new StartServer(n) },
+            { PlayerDead.Signature,n => new PlayerDead(n)}
         };
 
         public static IData BytesToData(byte[] bytes)

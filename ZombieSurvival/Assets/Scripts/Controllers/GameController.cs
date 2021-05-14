@@ -46,20 +46,25 @@ namespace GameClient.Controllers
                         break;
                     case PlayerState.Signature:
                         PlayerState ps = data as PlayerState;
-                        if (ps.playerId != PlayerController.MyID) 
+                        if (ps.playerId != PlayerController.MyID)
                         {
                             FakePlayerController.instance.handlePlayer(ps);
                         }
+                        break;
+                    case PlayerDead.Signature:
+                        PlayerDead pd = data as PlayerDead;
+                        FakePlayerController.instance.RemoveFakePlayer(pd.playerId);
                         break;
                     case PlayerReady.Signature:
                         UIController.instance.setPlayerReadiness(data as PlayerReady);
                         break;
                     case DisconnectClient.Signature:
                         DisconnectClient dc = data as DisconnectClient;
-                        if (GameActive) 
+                        if (GameActive)
                         {
-                            FakePlayerController.instance.DisconnectFakePlayer(dc.ClientID);
-                        } else 
+                            FakePlayerController.instance.RemoveFakePlayer(dc.ClientID);
+                        }
+                        else
                         {
                             UIController.instance.RemovePlayer(dc.ClientID);
                         }

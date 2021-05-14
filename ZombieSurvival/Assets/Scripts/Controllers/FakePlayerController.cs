@@ -6,7 +6,7 @@ using Data;
 
 namespace GameClient.Controllers
 {
-    
+
     class FakePlayerController : MonoBehaviour
     {
         public static FakePlayerController instance;
@@ -39,18 +39,19 @@ namespace GameClient.Controllers
 
         }
 
-        public void handlePlayer(PlayerState ps) 
+        public void handlePlayer(PlayerState ps)
         {
-            if (FakePlayerScripts.ContainsKey(ps.playerId)) 
+            if (FakePlayerScripts.ContainsKey(ps.playerId))
             {
                 FakePlayerScripts[ps.playerId].UpdatePlayerState(ps);
-            } else
+            }
+            else
             {
                 AddFakePlayer(ps);
             }
         }
 
-        public void AddFakePlayer(PlayerState ps) 
+        public void AddFakePlayer(PlayerState ps)
         {
             Position pos = ps.position;
             Vector3 vPos = new Vector3(pos.x, pos.y, pos.z);
@@ -59,7 +60,7 @@ namespace GameClient.Controllers
             FakePlayerScripts.Add(ps.playerId, fakePlayer.GetComponent<FakePlayer>());
         }
 
-        public void DisconnectFakePlayer(byte ID)
+        public void RemoveFakePlayer(byte ID)
         {
             if (FakePlayerGOs.ContainsKey(ID))
             {
