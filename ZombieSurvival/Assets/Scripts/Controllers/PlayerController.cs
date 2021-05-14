@@ -106,9 +106,15 @@ namespace GameClient.Controllers
             ps.position.yRot = transform.rotation.eulerAngles.y;
         }
 
-        float sendDataTimer = 0.1f;
+        private float hpRegen = 0;
+        private float sendDataTimer = 0.1f;
         private void Update()
         {
+            hpRegen += 5 * Time.deltaTime;
+            if (hpRegen >= 1) {
+                updateHP(1);
+                hpRegen--;
+            }
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 esc = !esc;
@@ -134,7 +140,7 @@ namespace GameClient.Controllers
 
         public void updateHP(int healthChange)
         {
-            ps.Hp = ps.Hp + healthChange;
+            ps.Hp = Mathf.Clamp(ps.Hp + healthChange, 0, 100);
 
             if (ps.Hp <= 0)
             {
@@ -143,6 +149,7 @@ namespace GameClient.Controllers
                 GameController.instance.outgoingQueue.Enqueue(new PlayerDead(ps.playerId));
                 Destroy(gameObject);
             }
+            GameUIController.Instance.setHPPercent(ps.Hp / 100f);
         }
     }
 }
