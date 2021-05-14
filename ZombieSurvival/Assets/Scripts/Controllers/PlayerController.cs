@@ -99,6 +99,16 @@ namespace GameClient.Controllers
                 d = Mathf.Clamp(d, -1f, 90f);
             camera.transform.eulerAngles = new Vector3(d, udDir.y, udDir.z);
 
+
+            ps.position.x = transform.position.x;
+            ps.position.y = transform.position.y;
+            ps.position.z = transform.position.z;
+            ps.position.yRot = transform.rotation.eulerAngles.y;
+        }
+
+        float sendDataTimer = 0.1f;
+        private void Update()
+        {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 esc = !esc;
@@ -114,16 +124,6 @@ namespace GameClient.Controllers
                     Cursor.visible = false;
                 }
             }
-
-            ps.position.x = transform.position.x;
-            ps.position.y = transform.position.y;
-            ps.position.z = transform.position.z;
-            ps.position.yRot = transform.rotation.eulerAngles.y;
-        }
-
-        float sendDataTimer = 0.1f;
-        private void Update()
-        {
             sendDataTimer -= Time.deltaTime;
             if (sendDataTimer < 0)
             {
