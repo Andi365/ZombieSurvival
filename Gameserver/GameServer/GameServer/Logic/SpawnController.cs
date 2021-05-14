@@ -10,7 +10,7 @@ namespace GameServer.Logic
     class SpawnController
     {
         int spawnPoint;
-        Random rand;
+        Random rand = new Random;
         float timer = 2f;
         byte nextZombie;
         int difficulty = 0;
