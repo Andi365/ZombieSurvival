@@ -16,7 +16,10 @@ namespace GameClient.Controllers
         private PlayerState ps;
         public new Camera camera;
         public Camera deathCam;
+        public AudioClip hurt;
+        private AudioSource audiosur;
         bool esc;
+
 
         private static byte myID = 0xFF;
         public static byte MyID
@@ -47,6 +50,8 @@ namespace GameClient.Controllers
         {
             rigidbody = GetComponent<Rigidbody>();
             ps = new PlayerState(myID);
+
+            audiosur = gameObject.GetComponent<AudioSource>();
         }
 
         // Update is called once per frame
@@ -150,6 +155,9 @@ namespace GameClient.Controllers
                 Destroy(gameObject);
             }
             GameUIController.Instance.setHPPercent(ps.Hp / 100f);
+
+            audiosur.PlayOneShot(hurt,0.7f);
+            
         }
     }
 }

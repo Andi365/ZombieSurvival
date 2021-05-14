@@ -18,12 +18,17 @@ namespace GameClient.AI
         private float closestTarget;
         private int target = 0;
 
+        public AudioClip hit;
+        public AudioClip hurt;
+
+        private AudioSource audiosur;
+
         // Start is called before the first frame update
         void Start()
         {
             trans = GetComponent<Transform>();
             players = GameObject.FindGameObjectsWithTag("Player");
-            
+            audiosur = GetComponent<AudioSource>();       
         }
 
         // Update is called once per frame
@@ -57,14 +62,15 @@ namespace GameClient.AI
                     {
                         PlayerController.instance.updateHP(-10);
                         atkTimer = 1;
+                        audiosur.PlayOneShot(hit,1.5f);
                     }
                 }
             }
         }
 
-        public void Damage(ZombieHit _zombie)
+        public void Damage(int Damage)
         {
-            GameController.instance.outgoingQueue.Enqueue(_zombie);
+            audiosur.PlayOneShot(hurt,2f);
         }
 
         public void setId(byte _id)
