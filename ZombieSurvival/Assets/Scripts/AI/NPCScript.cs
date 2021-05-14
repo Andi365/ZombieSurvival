@@ -11,37 +11,50 @@ namespace GameClient.AI
     {
         private Transform trans;
         public NavMeshAgent agent;
-        public GameObject player;
+        public GameObject[] players;
         public ZombieState zombie;
 
         private float atkTimer = 0;
+        private float closestTarget;
+        private int target = 0;
 
         // Start is called before the first frame update
         void Start()
         {
             trans = GetComponent<Transform>();
-            player = GameObject.FindGameObjectsWithTag("Player")[0];
+            players = GameObject.FindGameObjectsWithTag("Player");
+            
         }
 
         // Update is called once per frame
         void FixedUpdate()
-        {
-            if (player != null)
-                agent.SetDestination(player.transform.position);
+        {   
+            players = GameObject.FindGameObjectsWithTag("Player");
+            closestTarget = float.MaxValue;
+            for (int i = 0; i < players.Length; i++)
+            {   
+                if(Vector3.Distance(trans.transform.position,players[i].transform.position) < closestTarget){
+                    closestTarget = Vector3.Distance(trans.transform.position,players[i].transform.position);
+                    target = i;
+                }
+                Vector3.Distance(trans.transform.position,players[i].transform.position);
+            }
+            
+
+            if (players[target] != null)
+                agent.SetDestination(players[target].transform.position);
         }
 
         private void Update()
         {
             atkTimer -= Time.deltaTime;
 
-            if (player != null)
+            if (players[target] != null)
             {
-                if (Vector3.Distance(player.transform.position, trans.transform.position) <= 2)
+                if (Vector3.Distance(players[target].transform.position, trans.transform.position) <= 2)
                 {
-
                     if (atkTimer < 0)
                     {
-
                         PlayerController.instance.updateHP(-10);
                         atkTimer = 1;
                     }

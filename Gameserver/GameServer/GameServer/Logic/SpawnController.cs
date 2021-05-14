@@ -4,12 +4,16 @@ using System.Collections.Generic;
 using System.Text;
 using GameServer.Networking;
 
+
 namespace GameServer.Logic
 {
     class SpawnController
     {
+        int spawnPoint;
+        Random rand;
         float timer = 2f;
         byte nextZombie;
+        int difficulty = 0;
         private Dictionary<byte, ZombieState> Zombies;
         private static SpawnController instance;
         public static SpawnController Instance
@@ -38,13 +42,25 @@ namespace GameServer.Logic
 
             if(timer < 0 && Zombies.Count < 20)
             {
-
                 Zombies.Add(nextZombie, new ZombieState(100,nextZombie));
-
-                Server.BroadcastData(new ZombieSpawn(nextZombie,0));
+                spawnPoint = rand.Next(0, 3);
+                Server.BroadcastData(new ZombieSpawn(nextZombie, (byte)spawnPoint));
   
                 nextZombie++;
-                timer = 1f;
+
+                if(difficulty < 50)
+                {
+                    timer = 5f;
+                    difficulty++;
+                } else if (difficulty < 100)
+                {
+                    timer = 2f;
+                    difficulty++;
+                }
+                else
+                {
+                    timer = 1f;
+                }
             }
         }
 
