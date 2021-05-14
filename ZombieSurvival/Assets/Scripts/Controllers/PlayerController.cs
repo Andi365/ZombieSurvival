@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Data;
@@ -15,7 +15,7 @@ namespace GameClient.Controllers
         private new Rigidbody rigidbody;
         private PlayerState ps;
         public new Camera camera;
-        public Camera deathCam;
+        private GameObject deathCam;
         public AudioClip hurt;
         private AudioSource audiosur;
         bool esc;
@@ -50,7 +50,7 @@ namespace GameClient.Controllers
         {
             rigidbody = GetComponent<Rigidbody>();
             ps = new PlayerState(myID);
-
+            deathCam = GameObject.FindGameObjectWithTag("DeathCam");
             audiosur = gameObject.GetComponent<AudioSource>();
         }
 
@@ -150,7 +150,7 @@ namespace GameClient.Controllers
             if (ps.Hp <= 0)
             {
                 camera.gameObject.SetActive(false);
-                deathCam.gameObject.SetActive(true);
+                deathCam.SetActive(true);
                 GameController.instance.outgoingQueue.Enqueue(new PlayerDead(ps.playerId));
                 Destroy(gameObject);
             }

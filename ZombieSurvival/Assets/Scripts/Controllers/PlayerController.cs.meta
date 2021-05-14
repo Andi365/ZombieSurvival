@@ -3,7 +3,10 @@ guid: 0ccc449e8c483d241affe2869332d949
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - camera: {instanceID: 0}
+  - deathCam: {instanceID: 0}
+  - hurt: {fileID: 8300000, guid: 7f106ad9fa8d7e846aecfa72bdf9314e, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -5828,7 +5828,7 @@ GameObject:
   - component: {fileID: 1032131985}
   m_Layer: 0
   m_Name: DeathCam
-  m_TagString: Untagged
+  m_TagString: Deathcam
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
