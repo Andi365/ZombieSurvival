@@ -3474,6 +3474,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentHP: {fileID: 736515229}
+  CurrentAmmo: {fileID: 210546723}
+  AmmoText: {fileID: 972185094}
 --- !u!1 &534174523
 GameObject:
   m_ObjectHideFlags: 0
