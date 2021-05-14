@@ -60,7 +60,8 @@ namespace GameClient.AI
                     NPCScript zombie = hit.collider.GetComponent<NPCScript>();
 
                     if (zombie != null)
-                    {
+                    {   
+                        zombie.Damage(gunDamage);
                         GameController.instance.outgoingQueue.Enqueue(new ZombieHit(zombie.zombie.Id, gunDamage));
                     }
                 }
