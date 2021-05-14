@@ -118,7 +118,7 @@ class Client : MonoBehaviour
     }
     private void OnApplicationQuit()
     {
-        SendData(new DisconnectClient(0));
+        SendData(new DisconnectClient(PlayerController.MyID));
         tcp.socket.Close();
     }
 }
