@@ -62,7 +62,7 @@ namespace GameClient.AI
                     {
                         PlayerController.instance.updateHP(-10);
                         atkTimer = 1;
-                        audiosur.PlayOneShot(hit);
+                        audiosur.PlayOneShot(hit,1.5f);
                     }
                 }
             }
@@ -70,8 +70,7 @@ namespace GameClient.AI
 
         public void Damage(int Damage)
         {
-            audiosur.PlayOneShot(hurt);
-            Debug.Log("i was shot");
+            audiosur.PlayOneShot(hurt,2f);
         }
 
         public void setId(byte _id)

@@ -149,7 +149,7 @@ namespace GameClient.Controllers
                 Destroy(gameObject);
             }
 
-            audiosur.PlayOneShot(hurt);
+            audiosur.PlayOneShot(hurt,0.7f);
             
         }
     }
