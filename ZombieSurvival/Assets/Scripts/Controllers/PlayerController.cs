@@ -115,7 +115,7 @@ namespace GameClient.Controllers
         private float sendDataTimer = 0.1f;
         private void Update()
         {
-            hpRegen += 5 * Time.deltaTime;
+            hpRegen += 2 * Time.deltaTime;
             if (hpRegen >= 1) {
                 updateHP(1);
                 hpRegen--;

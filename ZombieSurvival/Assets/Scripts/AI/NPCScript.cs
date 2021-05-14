@@ -60,7 +60,8 @@ namespace GameClient.AI
                 {
                     if (atkTimer < 0)
                     {
-                        PlayerController.instance.updateHP(-10);
+                        if (players[target].GetComponent<PlayerController>() != null)
+                            PlayerController.instance.updateHP(-10);
                         atkTimer = 1;
                         audiosur.PlayOneShot(hit,1.5f);
                     }
