@@ -42,34 +42,37 @@ namespace GameClient.AI
             Vector3 rayOrigin = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
             if (Input.GetKey(KeyCode.Mouse0) && Time.time > nextFire)
             {
-                // make sure we cant shoot before time have exceeded.  
-                nextFire = Time.time + fireRate;
-                StartCoroutine(ShotEffect());
-
-                RaycastHit hit;
-                // to render a gunline we have to have two points in space to do so.
-                // the first point in space is out gun muzzle
-                gunLine.SetPosition(0, muzzle.position);
-
-                // if we hit something with out gun
-                if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, weaponRange))
+                if (PlayerController.instance.shoot())
                 {
-                    //set this hit position to our second point in space
-                    gunLine.SetPosition(1, hit.point);
+                    // make sure we cant shoot before time have exceeded.  
+                    nextFire = Time.time + fireRate;
+                    StartCoroutine(ShotEffect());
 
-                    NPCScript zombie = hit.collider.GetComponent<NPCScript>();
+                    RaycastHit hit;
+                    // to render a gunline we have to have two points in space to do so.
+                    // the first point in space is out gun muzzle
+                    gunLine.SetPosition(0, muzzle.position);
 
-                    if (zombie != null)
-                    {   
-                        zombie.Damage(gunDamage);
-                        GameController.instance.outgoingQueue.Enqueue(new ZombieHit(zombie.zombie.Id, gunDamage));
+                    // if we hit something with out gun
+                    if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, weaponRange))
+                    {
+                        //set this hit position to our second point in space
+                        gunLine.SetPosition(1, hit.point);
+
+                        NPCScript zombie = hit.collider.GetComponent<NPCScript>();
+
+                        if (zombie != null)
+                        {
+                            zombie.Damage(gunDamage);
+                            GameController.instance.outgoingQueue.Enqueue(new ZombieHit(zombie.zombie.Id, gunDamage));
+                        }
                     }
-                }
-                else
-                {
-                    //else set a point weaponrange out from the muzzle
-                    gunLine.SetPosition(1, rayOrigin + (fpsCam.transform.forward * weaponRange));
+                    else
+                    {
+                        //else set a point weaponrange out from the muzzle
+                        gunLine.SetPosition(1, rayOrigin + (fpsCam.transform.forward * weaponRange));
 
+                    }
                 }
             }
 

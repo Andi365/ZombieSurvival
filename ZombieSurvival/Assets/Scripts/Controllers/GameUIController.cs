@@ -7,6 +7,7 @@ public class GameUIController : MonoBehaviour
 {
     public Image CurrentHP;
     public Image CurrentAmmo;
+    public Text AmmoText;
     public static GameUIController Instance;
     private void Awake()
     {
@@ -28,6 +29,7 @@ public class GameUIController : MonoBehaviour
 
     public void setAmmoAmt(int curr, int max)
     {
-
+        CurrentAmmo.fillAmount = curr / (float)max;
+        AmmoText.text = $"Ammo\n{curr}/{max}";
     }
 }

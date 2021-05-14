@@ -36,12 +36,12 @@ namespace Data
         {
             playerId = _playerId;
             Hp = 100;
-            Ammo = 60;
+            Ammo = 18;
             position = new Position(0, 0, 0, 0, 0, 0, 0);
         }
 
         public int Hp { get; set; } = 100;
-        public int Ammo { get; set; } = 100;
+        public int Ammo { get; set; } = 18;
         public Position position { get; set; }
     }
 }

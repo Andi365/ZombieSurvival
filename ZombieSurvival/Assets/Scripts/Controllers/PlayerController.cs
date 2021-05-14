@@ -50,7 +50,8 @@ namespace GameClient.Controllers
         {
             rigidbody = GetComponent<Rigidbody>();
             ps = new PlayerState(myID);
-
+            Reload();
+            updateHP(0);
             audiosur = gameObject.GetComponent<AudioSource>();
         }
 
@@ -135,6 +136,10 @@ namespace GameClient.Controllers
                     Cursor.visible = false;
                 }
             }
+
+            if (Input.GetKeyDown(KeyCode.R))
+                Reload();
+
             sendDataTimer -= Time.deltaTime;
             if (sendDataTimer < 0)
             {
@@ -158,6 +163,23 @@ namespace GameClient.Controllers
 
             audiosur.PlayOneShot(hurt,0.7f);
             
+        }
+
+        private void Reload() 
+        {
+            ps.Ammo = 18;
+            GameUIController.Instance.setAmmoAmt(ps.Ammo, 18);
+        }
+
+        public bool shoot() 
+        {
+            if (ps.Ammo > 0) 
+            {
+                ps.Ammo--;
+                GameUIController.Instance.setAmmoAmt(ps.Ammo, 18);
+                return true;
+            }
+            return false;
         }
     }
 }
