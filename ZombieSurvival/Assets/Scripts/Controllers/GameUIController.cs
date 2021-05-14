@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class GameUIController : MonoBehaviour
 {
     public Image CurrentHP;
+    public Image CurrentAmmo;
     public static GameUIController Instance;
     private void Awake()
     {
@@ -20,8 +21,13 @@ public class GameUIController : MonoBehaviour
         }
     }
 
-    public void setHPPercent(float hp) 
+    public void setHPPercent(float hp)
     {
         CurrentHP.fillAmount = hp;
+    }
+
+    public void setAmmoAmt(int curr, int max)
+    {
+
     }
 }
