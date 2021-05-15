@@ -34,7 +34,8 @@ namespace GameClient.Controllers
             }
         }
 
-        private void Start() {
+        private void Start()
+        {
             playersReady = new Dictionary<byte, (string, bool)>();
         }
 
@@ -42,37 +43,38 @@ namespace GameClient.Controllers
         {
             if (!validate())
                 return;
-            StartMenu.SetActive(false);
-            LobbyMenu.SetActive(true);
-            UsernameField.interactable = false;
-            PlayerController.PlayerName = UsernameField.text;
             Client.instance.ConnectToServer(IPField.text, PortField.text);
         }
 
         public void onConnect()
         {
+            StartMenu.SetActive(false);
+            LobbyMenu.SetActive(true);
+            UsernameField.interactable = false;
+            PlayerController.PlayerName = UsernameField.text;
             GameController.instance.outgoingQueue.Enqueue(new PlayerReady(PlayerController.MyID, false, PlayerController.PlayerName));
         }
 
         Regex iprx = new Regex(@"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$");
-        private bool validate() 
+        private bool validate()
         {
             UsernameError.text = "";
             PortError.text = "";
             IPError.text = "";
 
             bool val = true;
-            if (String.IsNullOrWhiteSpace(UsernameField.text)) 
+            if (String.IsNullOrWhiteSpace(UsernameField.text))
             {
                 UsernameError.text = "Username cannot be empty";
                 val = false;
             }
-            if (String.IsNullOrWhiteSpace(PortField.text)) 
+            if (String.IsNullOrWhiteSpace(PortField.text))
             {
                 PortError.text = "Host Port cannot be empty";
                 val = false;
             }
-            if (!iprx.IsMatch(IPField.text)) {
+            if (!iprx.IsMatch(IPField.text))
+            {
                 IPError.text = "Host IP is not a valid IP";
                 val = false;
             }
@@ -87,40 +89,42 @@ namespace GameClient.Controllers
             return val;
         }
 
-        public void setPlayerReadiness(PlayerReady player) 
+        public void setPlayerReadiness(PlayerReady player)
         {
             string text = $"{player.name.Trim('\0')} is {(player.ready ? "" : "not ")}ready";
-            if (playersReady.ContainsKey(player.ID)) 
+            if (playersReady.ContainsKey(player.ID))
             {
                 playersReady[player.ID] = (player.name, player.ready);
-            } else 
+            }
+            else
             {
                 playersReady.Add(player.ID, (player.name, player.ready));
             }
             listView.SetItemText(player.ID, text);
         }
 
-        public void RemovePlayer(byte ID) 
+        public void RemovePlayer(byte ID)
         {
             listView.RemovePlayer(ID);
             if (playersReady.ContainsKey(ID))
                 playersReady.Remove(ID);
         }
 
-        public void toggleReady(Text readyButtonText) 
+        public void toggleReady(Text readyButtonText)
         {
-            if (readyButtonText.text.Equals("Ready")) 
+            if (readyButtonText.text.Equals("Ready"))
             {
                 readyButtonText.text = "Unready";
                 GameController.instance.outgoingQueue.Enqueue(new PlayerReady(PlayerController.MyID, true, PlayerController.PlayerName));
-            } else
+            }
+            else
             {
                 readyButtonText.text = "Ready";
                 GameController.instance.outgoingQueue.Enqueue(new PlayerReady(PlayerController.MyID, false, PlayerController.PlayerName));
             }
         }
 
-        private bool allReady() 
+        private bool allReady()
         {
             foreach ((string, bool) playerReady in playersReady.Values)
                 if (!playerReady.Item2)
@@ -128,7 +132,7 @@ namespace GameClient.Controllers
             return true;
         }
 
-        public void StartGame() 
+        public void StartGame()
         {
             if (allReady())
                 GameController.instance.outgoingQueue.Enqueue(new StartServer());
@@ -136,7 +140,7 @@ namespace GameClient.Controllers
                 PlayersReadyError.text = "All players must be ready";
         }
 
-        public void ForceStartGame() 
+        public void ForceStartGame()
         {
             SceneManager.LoadScene(1, LoadSceneMode.Single);
         }
