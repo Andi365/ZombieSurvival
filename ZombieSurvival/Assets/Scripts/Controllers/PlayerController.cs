@@ -17,7 +17,7 @@ namespace GameClient.Controllers
         public new Camera camera;
         private GameObject deathCam;
         public AudioClip hurt;
-        private AudioSource audiosur;
+        public AudioSource audiosur;
         bool esc;
 
 
@@ -53,7 +53,8 @@ namespace GameClient.Controllers
             Reload();
             updateHP(0);
             deathCam = GameObject.FindGameObjectWithTag("DeathCam");
-            audiosur = gameObject.GetComponent<AudioSource>();
+            deathCam.SetActive(false);
+            GameUIController.Instance.playerDead = false;
         }
 
         // Update is called once per frame
@@ -122,21 +123,6 @@ namespace GameClient.Controllers
                 updateHP(1);
                 hpRegen--;
             }
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                esc = !esc;
-
-                if (esc)
-                {
-                    Cursor.lockState = CursorLockMode.None;
-                    Cursor.visible = true;
-                }
-                else
-                {
-                    Cursor.lockState = CursorLockMode.Locked;
-                    Cursor.visible = false;
-                }
-            }
 
             if (Input.GetKeyDown(KeyCode.R))
                 Reload();
@@ -158,12 +144,13 @@ namespace GameClient.Controllers
                 camera.gameObject.SetActive(false);
                 deathCam.SetActive(true);
                 GameController.instance.outgoingQueue.Enqueue(new PlayerDead(ps.playerId));
+                GameUIController.Instance.playerDead = true;
                 Destroy(gameObject);
             }
             GameUIController.Instance.setHPPercent(ps.Hp / 100f);
 
-            audiosur.PlayOneShot(hurt,0.7f);
-            
+            if (healthChange < 0)
+                audiosur.PlayOneShot(hurt,0.7f);
         }
 
         private void Reload() 

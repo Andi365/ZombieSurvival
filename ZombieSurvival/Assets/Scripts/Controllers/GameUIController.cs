@@ -5,8 +5,11 @@ using UnityEngine.UI;
 
 public class GameUIController : MonoBehaviour
 {
+    public bool playerDead = false;
     public Image CurrentHP;
     public Image CurrentAmmo;
+    public GameObject ESCMenu, HUD;
+    private bool ESCActive = false, HUDActive = true;
     public Text AmmoText;
     public static GameUIController Instance;
     private void Awake()
@@ -22,6 +25,23 @@ public class GameUIController : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ESCActive = !ESCActive;
+            HUDActive = !HUDActive;
+            ESCMenu.SetActive(ESCActive);
+            HUD.SetActive(HUDActive);
+        }
+        if (playerDead)
+            HUD.SetActive(false);
+        Cursor.visible = ESCActive;
+        Cursor.lockState = CursorLockMode.Locked;
+        if (ESCActive)
+            Cursor.lockState = CursorLockMode.None;
+    }
+
     public void setHPPercent(float hp)
     {
         CurrentHP.fillAmount = hp;
@@ -31,5 +51,10 @@ public class GameUIController : MonoBehaviour
     {
         CurrentAmmo.fillAmount = curr / (float)max;
         AmmoText.text = $"Ammo\n{curr}/{max}";
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 }
