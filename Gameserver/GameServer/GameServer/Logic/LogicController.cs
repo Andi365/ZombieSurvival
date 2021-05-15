@@ -64,6 +64,11 @@ namespace GameServer.Logic
                         LC.RemovePlayer(data.Item1);
                     }
                     Server.BroadcastData(data.Item2);
+                    if (Server.GameEmpty() && run)
+                    {
+                        Console.WriteLine("Stopping server due to all players disconnecting");
+                        run = false;
+                    }
                     break;
                 case StopServer.Signature:
                     run = false;
@@ -123,10 +128,14 @@ namespace GameServer.Logic
 
         private void Update()
         {
-            (byte, IData) data;
-            if (IncommingEventQueue.TryDequeue(out data))
+            for (int i = 0; i < 5; i++)
             {
-                HandleMessage(data);
+                (byte, IData) data;
+                if (IncommingEventQueue.TryDequeue(out data))
+                {
+                    HandleMessage(data);
+                } else
+                    break;
             }
 
             SC.Update();

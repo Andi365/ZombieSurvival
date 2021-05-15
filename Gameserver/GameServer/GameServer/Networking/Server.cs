@@ -83,5 +83,10 @@ namespace GameServer.Networking
             clients.Remove(id);
             availableIDs.Enqueue(id);
         }
+
+        public static bool GameEmpty()
+        {
+            return clients.Count == 0;
+        }
     }
 }
