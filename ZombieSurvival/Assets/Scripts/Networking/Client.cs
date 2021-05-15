@@ -61,6 +61,11 @@ class Client : MonoBehaviour
         tcp.Connect(ip, port);
     }
 
+    public void connectionDenied() 
+    {
+        tcp.socket.Close();
+    }
+
     class TCP
     {
         public TcpClient socket;

@@ -100,7 +100,7 @@ namespace GameServer.Logic
             }
         }
 
-        private bool run = false;
+        public bool run { get; private set; } = false;
         public void Start()
         {
             while (!run)

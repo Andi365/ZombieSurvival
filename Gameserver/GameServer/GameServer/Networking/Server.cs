@@ -43,15 +43,25 @@ namespace GameServer.Networking
         {
             TcpClient _client = tcpListener.EndAcceptTcpClient(_result);
             tcpListener.BeginAcceptTcpClient(new AsyncCallback(TCPConnectCallback), null);
-
-            byte newClientID = availableIDs.Dequeue();
+            bool availableID = !(availableIDs.Count == 0);
+            byte newClientID = 0xFF;
+            if (availableID)
+                newClientID = availableIDs.Dequeue();
             Client newClient = new Client(newClientID);
             newClient.tcp.Connect(_client);
-            clients.Add(newClientID, newClient);
-            newClient.tcp.SendData(new AssignID(newClientID));
+            bool canConnect = availableID && (Logic.LogicController.Instance.run == false);
+            newClient.tcp.SendData(new Connect(canConnect));
 
-            Console.WriteLine($"Inbound connection from {_client.Client.RemoteEndPoint}, connected as id {newClientID}");
-            Logic.LogicController.Instance.OnClientConnected(newClientID);
+            if (canConnect)
+            {
+                clients.Add(newClientID, newClient);
+                newClient.tcp.SendData(new AssignID(newClientID));
+                Console.WriteLine($"Inbound connection from {_client.Client.RemoteEndPoint}, connected as id {newClientID}");
+                Logic.LogicController.Instance.OnClientConnected(newClientID);
+            } else
+            {
+                newClient.tcp.socket.Close();
+            }
         }
 
         private static void InitializeZombieSpawn()

@@ -38,6 +38,10 @@ namespace GameClient.Controllers
                         PlayerController.MyID = (data as AssignID).ID;
                         UIController.instance.onConnect();
                         break;
+                    case Connect.Signature:
+                        if (!(data as Connect).connectionAccepted)
+                            Client.instance.connectionDenied();
+                        break;
                     case ZombieSpawn.Signature:
                         sc.spawnEnemy(data as ZombieSpawn);
                         break;
