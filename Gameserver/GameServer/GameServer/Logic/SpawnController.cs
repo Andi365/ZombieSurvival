@@ -70,7 +70,15 @@ namespace GameServer.Logic
 
         public void DamageZombie(ZombieHit hit)
         {
-            ZombieState zom = Zombies[hit.Id];
+            ZombieState zom;
+            try
+            {
+                zom = Zombies[hit.Id];
+            }
+            catch (Exception)
+            {
+                zom = null;
+            }
 
             if (zom != null)
             {
