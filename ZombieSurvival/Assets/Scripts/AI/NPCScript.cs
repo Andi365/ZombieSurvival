@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using GameClient.Controllers;
 using Data;
+using System;
 
 namespace GameClient.AI
 {
@@ -28,50 +29,57 @@ namespace GameClient.AI
         {
             trans = GetComponent<Transform>();
             players = GameObject.FindGameObjectsWithTag("Player");
-            audiosur = GetComponent<AudioSource>();       
+            audiosur = GetComponent<AudioSource>();
         }
 
         // Update is called once per frame
         void FixedUpdate()
-        {   
+        {
             players = GameObject.FindGameObjectsWithTag("Player");
             closestTarget = float.MaxValue;
             for (int i = 0; i < players.Length; i++)
-            {   
-                if(Vector3.Distance(trans.transform.position,players[i].transform.position) < closestTarget){
-                    closestTarget = Vector3.Distance(trans.transform.position,players[i].transform.position);
+            {
+                if (Vector3.Distance(trans.transform.position, players[i].transform.position) < closestTarget)
+                {
+                    closestTarget = Vector3.Distance(trans.transform.position, players[i].transform.position);
                     target = i;
                 }
-                Vector3.Distance(trans.transform.position,players[i].transform.position);
+                Vector3.Distance(trans.transform.position, players[i].transform.position);
             }
-            
 
-            if (players[target] != null)
-                agent.SetDestination(players[target].transform.position);
+            try
+            {
+                if (players[target] != null)
+                    agent.SetDestination(players[target].transform.position);
+            }
+            catch (Exception) { }
         }
 
         private void Update()
         {
             atkTimer -= Time.deltaTime;
-
-            if (players[target] != null)
+            try
             {
-                if (Vector3.Distance(players[target].transform.position, trans.transform.position) <= 2)
+                if (players[target] != null)
                 {
-                    if (atkTimer < 0)
+                    if (Vector3.Distance(players[target].transform.position, trans.transform.position) <= 2)
                     {
-                        if (players[target].GetComponent<PlayerController>() != null)
-                            PlayerController.instance.updateHP(-10);
-                        atkTimer = 1;
-                        audiosur.PlayOneShot(hit,1.5f);
+                        if (atkTimer < 0)
+                        {
+                            if (players[target].GetComponent<PlayerController>() != null)
+                                PlayerController.instance.updateHP(-10);
+                            atkTimer = 1;
+                            audiosur.PlayOneShot(hit, 1.5f);
+                        }
                     }
                 }
             }
+            catch (Exception) { }
         }
 
         public void Damage(int Damage)
         {
-            audiosur.PlayOneShot(hurt,2f);
+            audiosur.PlayOneShot(hurt, 2f);
         }
 
         public void setId(byte _id)

@@ -1742,7 +1742,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 246227716}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93a1bef12087bce468be150adc773178, type: 3}
   m_Name: 
@@ -1934,7 +1934,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: cc3da2e9a38bdbd439089a26604b5abd, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 6253720998139457195, guid: e34d3f785724d8d4385b6e1da9ab1905,
         type: 3}
       propertyPath: m_PlayOnAwake
@@ -3498,7 +3498,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 546822251}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93a1bef12087bce468be150adc773178, type: 3}
   m_Name: 
@@ -5135,6 +5135,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6253720998139457195, guid: e34d3f785724d8d4385b6e1da9ab1905,
         type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6253720998139457195, guid: e34d3f785724d8d4385b6e1da9ab1905,
+        type: 3}
       propertyPath: MaxDistance
       value: 20
       objectReference: {fileID: 0}
@@ -5675,7 +5680,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 945476952}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93a1bef12087bce468be150adc773178, type: 3}
   m_Name: 
@@ -8162,7 +8167,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1747934655}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93a1bef12087bce468be150adc773178, type: 3}
   m_Name: 
@@ -9989,7 +9994,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2131042368}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93a1bef12087bce468be150adc773178, type: 3}
   m_Name: 
