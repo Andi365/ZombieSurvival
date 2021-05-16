@@ -13,6 +13,7 @@ namespace GameClient.Controllers
         public SpawnController sc { private get; set; }
         public ConcurrentQueue<IData> queue = new ConcurrentQueue<IData>();
         public ConcurrentQueue<IData> outgoingQueue = new ConcurrentQueue<IData>();
+        public GameObject PlayerPrefab;
 
         private void Awake()
         {
@@ -77,10 +78,19 @@ namespace GameClient.Controllers
                         GameActive = true;
                         SceneManager.LoadScene(1, LoadSceneMode.Single);
                         break;
+                    case Respawn.Signature:
+                        GameUIController.Instance.ShowRespawnTimer();
+                        Invoke("RespawnPlayer", 10);
+                        break;
                     default:
                         break;
                 }
             }
+        }
+
+        private void RespawnPlayer() 
+        {
+            Instantiate(PlayerPrefab, new Vector3(0,0,0), Quaternion.identity);
         }
     }
 }

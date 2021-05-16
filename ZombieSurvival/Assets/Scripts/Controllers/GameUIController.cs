@@ -12,6 +12,8 @@ public class GameUIController : MonoBehaviour
     private bool ESCActive = false, HUDActive = true;
     public Text AmmoText;
     public static GameUIController Instance;
+    public Text RespawnText;
+    private float RespawnTime = 0;
     private void Awake()
     {
         if (Instance == null)
@@ -27,19 +29,31 @@ public class GameUIController : MonoBehaviour
 
     private void Update()
     {
+        RespawnTime -= Time.deltaTime;
+        if (RespawnTime >= 1)
+            RespawnText.text = $"Respawn\n{(int)RespawnTime}";
+        else
+            RespawnText.text = "";
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             ESCActive = !ESCActive;
             HUDActive = !HUDActive;
-            ESCMenu.SetActive(ESCActive);
-            HUD.SetActive(HUDActive);
+            updateGUIS();
         }
         if (playerDead)
             HUD.SetActive(false);
+        else
+            updateGUIS();
         Cursor.visible = ESCActive;
         Cursor.lockState = CursorLockMode.Locked;
         if (ESCActive)
             Cursor.lockState = CursorLockMode.None;
+    }
+
+    private void updateGUIS()
+    {
+        ESCMenu.SetActive(ESCActive);
+        HUD.SetActive(HUDActive);
     }
 
     public void setHPPercent(float hp)
@@ -51,6 +65,11 @@ public class GameUIController : MonoBehaviour
     {
         CurrentAmmo.fillAmount = curr / (float)max;
         AmmoText.text = $"Ammo\n{curr}/{max}";
+    }
+
+    public void ShowRespawnTimer() 
+    {
+        RespawnTime = 10.999f;
     }
 
     public void Quit()

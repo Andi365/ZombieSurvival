@@ -144,6 +144,7 @@ namespace GameClient.Controllers
                 camera.gameObject.SetActive(false);
                 deathCam.SetActive(true);
                 GameController.instance.outgoingQueue.Enqueue(new PlayerDead(ps.playerId));
+                GameController.instance.queue.Enqueue(new Respawn());
                 GameUIController.Instance.playerDead = true;
                 Destroy(gameObject);
             }

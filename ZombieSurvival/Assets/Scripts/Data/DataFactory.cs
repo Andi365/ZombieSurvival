@@ -18,6 +18,7 @@ namespace Data
             { ZombieHit.Signature, n => new ZombieHit(n) },
             { StartServer.Signature, n => new StartServer(n) },
             { Connect.Signature, n => new Connect(n) },
+            { Respawn.Signature, n => new Respawn(n) },
             { PlayerDead.Signature,n => new PlayerDead(n)}
         };
 
