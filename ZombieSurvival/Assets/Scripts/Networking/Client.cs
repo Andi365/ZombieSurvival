@@ -37,9 +37,6 @@ class Client : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-            SendData(new StopServer());
-
         if (tcp.connected)
         {
             IData data;
