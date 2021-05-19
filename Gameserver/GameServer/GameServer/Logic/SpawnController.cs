@@ -91,6 +91,7 @@ namespace GameServer.Logic
             }
             else
             {
+                Server.BroadcastData(new ZombieDead(hit.Id));
                 Console.WriteLine("Error: could not find zombie in Dictionary");
             }
         }
