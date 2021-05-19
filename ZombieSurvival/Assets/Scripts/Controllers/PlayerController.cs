@@ -17,6 +17,7 @@ namespace GameClient.Controllers
         public new Camera camera;
         private GameObject deathCam;
         public AudioClip hurt;
+        public AudioClip reload;
         public AudioSource audiosur;
         bool esc;
 
@@ -158,6 +159,7 @@ namespace GameClient.Controllers
         {
             ps.Ammo = 18;
             GameUIController.Instance.setAmmoAmt(ps.Ammo, 18);
+            audiosur.PlayOneShot(reload,0.7f);
         }
 
         public bool shoot() 
